@@ -4,7 +4,8 @@ import { error } from "@sveltejs/kit";
 /** @type {import('./$types').RequestHandler} */
 export async function POST({ request, cookies }) {
   const data = await request.json();
-  const id = data.linkID ?? generateRandomId(data.length);
+  const id =
+    data.linkID?.length >= 0 ? generateRandomId(data.length) : data.linkID;
 
   if (cookies.get("Password") !== password) throw error(403, "Forbidden");
 
@@ -27,7 +28,7 @@ export async function POST({ request, cookies }) {
 
   return new Response(
     JSON.stringify({
-      id: import.meta.env.VITE_DOMAIN + "/" + id,
+      id,
       url: data.url,
       clicks: 0,
       status: 200,

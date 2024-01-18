@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
+  import { onMount } from "svelte";
 
   /*
   const testLinks = [
@@ -18,92 +18,150 @@
 
   export let data;
 
-  let testLinks = data.data
-  let newlink = false
-  let editlink = false
-  
-  let url: string = ""
-  let id: string = ""
-  let updateURL: string = ""
-  let updateID: string = ""
+  let testLinks = data.data;
+  let newlink = false;
+  let editlink = false;
+
+  let url: string = "";
+  let id: string = "";
+  let updateURL: string = "";
+  let updateID: string = "";
 
   async function submitURL() {
-    const result = await fetch("/create", {method:"POST",
-    body:JSON.stringify({
+    if (url.length <= 6 || (!url.startsWith("https://") && !url.startsWith("http://"))) {
+      return alert("Korrekte URL angeben")
+    }
+    
+    const result = await fetch("/create", {
+      method: "POST",
+      body: JSON.stringify({
+        url,
+        linkID: id,
+      }),
+    });
+    const data = await result.json();
+    testLinks.push({
       url,
-      linkID: id,
-    })
-  })
-  console.log(await result.json())
-  testLinks.push({
-      url,
-      id,
+      id: data.id,
       clicks: 0,
-  })
-  testLinks = testLinks
-  url = "";
-  id = "";
-  newlink = false  
-}
-
-async function deleteURL(id:string) {
-    const result = await fetch("/delete", {method:"POST",
-    body:JSON.stringify({
-      id: id,
-    })
-  })
-  console.log(await result.json())
-  testLinks = testLinks.filter(v => v.id !== id)
+    });
+    testLinks = testLinks;
+    url = "";
+    id = "";
+    newlink = false;
   }
 
-async function submitUpdate() {
-    const result = await fetch("/update", {method:"PATCH",
-    body:JSON.stringify({
-      newURL: updateURL, 
-      id: updateID,
-    })
-  })
-  console.log(await result.json())
-
-  testLinks.forEach(element => {
-    if (element.id == updateID) {
-      element.url = updateURL
-    } 
-  });
-  testLinks = testLinks
-  updateID = ""
-  updateURL = ""
-  editlink = false
+  async function deleteURL(id: string) {
+    const result = await fetch("/delete", {
+      method: "POST",
+      body: JSON.stringify({
+        id: id,
+      }),
+    });
+    console.log(await result.json());
+    testLinks = testLinks.filter((v) => v.id !== id);
   }
 
+  async function submitUpdate() {
+    const result = await fetch("/update", {
+      method: "PATCH",
+      body: JSON.stringify({
+        newURL: updateURL,
+        id: updateID,
+      }),
+    });
+    console.log(await result.json());
+
+    testLinks.forEach((element) => {
+      if (element.id == updateID) {
+        element.url = updateURL;
+      }
+    });
+    testLinks = testLinks;
+    updateID = "";
+    updateURL = "";
+    editlink = false;
+  }
 </script>
 
-<div class="bg-slate-950 min-h-screen text-slate-100">
+<div class="bg-cat-crust min-h-screen text-cat-text">
   <nav class="flex justify-between p-8">
     <div class="font-bold text-2xl">jbugel.link</div>
     <div>
-      <button on:click={() => {newlink = !newlink}} class="bg-purple-950 p-2 px-4 rounded-xl">Create Link</button>
+      <button
+        on:click={() => {
+          newlink = !newlink;
+        }}
+        class="bg-cat-surface0 font-bold p-2 px-4 rounded-xl flex gap-2 items-center"
+        ><svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          stroke-width="2.25"
+          stroke="#a6adc8"
+          class="w-6 h-6"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M12 4.5v15m7.5-7.5h-15"
+          />
+        </svg>
+        Create Link</button
+      >
     </div>
   </nav>
-  
+
   <div class="flex flex-col gap-4 xl:w-1/2 w-11/12 mx-auto">
     {#if newlink}
-        <div class="flex flex-col gap-3 mb-8">
-            <p class="text-2xl font-bold">Create a new Link</p>
-            <input bind:value={url} class="rounded-lg p-2 bg-slate-800" type="text" placeholder="Paste your url" name="url" id="" />
-            <input bind:value={id} class="rounded-lg p-2 bg-slate-800" type="text" placeholder="name your link" name="id" id="" />
-            <button on:click={() => {submitURL()}} class="bg-green-600 rounded-lg p-2 font-bold">Save</button>
-        </div>
+      <div class="flex flex-col gap-3 mb-8">
+        <p class="text-2xl font-bold">Create a new Link</p>
+        <input
+          bind:value={url}
+          class="rounded-lg p-2 bg-cat-base"
+          type="text"
+          placeholder="Paste your url"
+          name="url"
+          id=""
+        />
+        <input
+          bind:value={id}
+          class="rounded-lg p-2 bg-cat-base"
+          type="text"
+          placeholder="name your link"
+          name="id"
+          id=""
+        />
+        <button
+          on:click={() => {
+            submitURL();
+          }}
+          class="bg-cat-green text-cat-base rounded-lg p-2 font-bold">Save</button
+        >
+      </div>
     {/if}
     {#if editlink}
-        <div class="flex flex-col gap-3 mb-8">
-            <p class="text-2xl font-bold">Update Link</p>
-            <input bind:value={updateURL} class="rounded-lg p-2 bg-slate-800" type="text" placeholder="Paste your url" name="url" id="" />
-            <button on:click={() => {submitUpdate()}} class="bg-green-600 rounded-lg p-2 font-bold">Save</button>
-        </div>
+      <div class="flex flex-col gap-3 mb-8">
+        <p class="text-2xl font-bold">Update Link</p>
+        <input
+          bind:value={updateURL}
+          class="rounded-lg p-2 bg-cat-base"
+          type="text"
+          placeholder="Paste your url"
+          name="url"
+          id=""
+        />
+        <button
+          on:click={() => {
+            submitUpdate();
+          }}
+          class="bg-green-600 rounded-lg p-2 font-bold">Save</button
+        >
+      </div>
     {/if}
     {#each testLinks as { url, id, clicks }}
-      <div  class="bg-slate-700 flex justify-between p-3.5 rounded-xl px-7 items-center">
+      <div
+        class="bg-cat-base justify-between p-3.5 rounded-xl px-7 items-center gridcontainer"
+      >
         <div>
           {url}
         </div>
@@ -113,19 +171,35 @@ async function submitUpdate() {
         <div>
           {clicks}
         </div>
-        <div class="flex gap-2">
-          <button on:click={() => {
-            updateURL= url
-            updateID = id
-            editlink = true
-
-          }}>
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-  <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
-</svg>
-
+        <div class="flex place-content-end gap-2">
+          <button
+            on:click={() => {
+              updateURL = url;
+              updateID = id;
+              editlink = true;
+            }}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-6 h-6"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125"
+              />
+            </svg>
           </button>
-          <button on:click={() => {deleteURL(id)}} class="flex items-center">
+          <button
+            on:click={() => {
+              deleteURL(id);
+            }}
+            class="flex items-center"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -145,5 +219,10 @@ async function submitUpdate() {
       </div>
     {/each}
   </div>
-
 </div>
+<style>
+.gridcontainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr auto;
+}
+</style>
