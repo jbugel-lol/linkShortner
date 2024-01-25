@@ -10,11 +10,6 @@ export const connection = mysql.createConnection({
 export const password = import.meta.env.VITE_ADMIN_PASSWORD;
 startConnection();
 
-setTimeout(() => {
-  console.log("Killed Connection");
-  connection.end();
-}, 10000)
-
 /**
  * @param sqlQuery {string}
  * @returns Promise<{{ results: [], error: null | string}}>
