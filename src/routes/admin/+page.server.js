@@ -1,4 +1,4 @@
-import { databaseRequest, password } from "$lib";
+import { databaseRequest, password } from "$lib/server";
 import { error, json } from "@sveltejs/kit";
 
 /** @type {import('./$types').PageServerLoad} */

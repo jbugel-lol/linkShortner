@@ -8,18 +8,22 @@ export const connection = mysql.createConnection({
 });
 
 export const password = import.meta.env.VITE_ADMIN_PASSWORD;
-try {
-  connection.connect();
-} catch (error) {
-  console.log(error);
-}
+startConnection();
+
+setTimeout(() => {
+  console.log("Killed Connection");
+  connection.end();
+}, 10000)
 
 /**
  * @param sqlQuery {string}
- * @returns {{ results: [], error: null | string}}
+ * @returns Promise<{{ results: [], error: null | string}}>
  */
 export async function databaseRequest(sqlQuery) {
   return new Promise((resolve, reject) => {
+    if (connection.state === "disconnected") {
+      startConnection();
+    }
     connection.query(sqlQuery, (error, results) => {
       if (error) {
         console.log(error);
@@ -29,4 +33,12 @@ export async function databaseRequest(sqlQuery) {
       }
     });
   });
+}
+
+function startConnection() {
+  try {
+    connection.connect();
+  } catch (error) {
+    console.log(error);
+  }
 }

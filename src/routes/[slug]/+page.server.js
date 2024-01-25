@@ -1,4 +1,4 @@
-import { connection, databaseRequest } from "$lib";
+import { connection, databaseRequest } from "$lib/server";
 import { redirect } from "@sveltejs/kit";
 
 /** @type {import('./$types').PageServerLoad} */
@@ -9,7 +9,7 @@ export async function load({ params }) {
     "SELECT * FROM urls WHERE id = " + connection.escape(id)
   );
 
-  if (!query.results[0] | query.error) {
+  if (!query.results[0] || query.error) {
     redirect(302, import.meta.env.VITE_ERROR_DOMAIN);
   }
   databaseRequest(
