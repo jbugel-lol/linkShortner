@@ -154,7 +154,7 @@
           on:click={() => {
             submitUpdate();
           }}
-          class="bg-green-600 rounded-lg p-2 font-bold">Save</button
+          class="bg-cat-green rounded-lg p-2 font-bold text-cat-crust">Save</button
         >
       </div>
     {/if}
