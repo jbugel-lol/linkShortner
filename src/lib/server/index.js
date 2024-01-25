@@ -21,11 +21,11 @@ setTimeout(() => {
  */
 export async function databaseRequest(sqlQuery) {
   return new Promise((resolve, reject) => {
-    if (connection.state === "disconnected") {
-      startConnection();
-    }
     connection.query(sqlQuery, (error, results) => {
       if (error) {
+        if (connection.state === "disconnected") {
+          startConnection();
+        }
         console.log(error);
         reject({ results: null, error: "Something went wrong!" });
       } else {
