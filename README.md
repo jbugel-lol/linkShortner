@@ -1,38 +1,59 @@
-# create-svelte
+# Link Shortener
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
+## Overview
 
-## Creating a project
+Welcome to our Link Shortener project built using SvelteKit! Our link shortener offers minimal tracking, keeping your data private. We've designed it with a sleek and stylish interface inspired by the [Catppuccin Mocha theme](https://github.com/catppuccin/catppuccin#-palette). As part of our commitment to openness, this project is Free and Open Source Software (FOSS). We've also implemented a secure login page with password authentication for added protection.
 
-If you're seeing this, you've probably already done this step. Congrats!
+## Getting Started
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
+To get started with our link shortener, follow these simple steps:
 
-# create a new project in my-app
-npm create svelte@latest my-app
-```
+1. **Clone the Repository:**
 
-## Developing
+   ```bash
+   git clone git@github.com:jbugel-lol/linkShortner.git
+   ```
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+2. **Navigate to the Project Directory:**
 
-```bash
-npm run dev
+   ```bash
+   cd linkShortner
+   ```
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
+3. **Install Dependencies:**
 
-## Building
+   ```bash
+   npm install
+   ```
 
-To create a production version of your app:
+4. **Build the Project:**
 
-```bash
-npm run build
-```
+   ```bash
+   npm run build
+   ```
 
-You can preview the production build with `npm run preview`.
+5. **Run the Project:**
 
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+   ```bash
+   npm run preview
+   ```
+
+   _Note: Make sure to configure your Nginx or Apache2 server to listen to the port specified in the console output, typically 4173._
+
+## Additional Configuration
+
+To use our link shortener effectively, there are a couple of additional steps to take:
+
+- **Database Setup:**
+  You'll need to set up your own database and configure it according to your needs.
+
+- **Environment Variables:**
+  Fill out the provided `.env.example` file and rename it to `.env` with your specific configuration.
+
+## How to Use
+
+To make use of our link shortener, simply visit `localhost:4173` or the domain you've configured. Our user-friendly interface makes it easy to create and manage your shortened links hassle-free.
+
+## Contributions
+
+While we currently don't have specific guidelines for contributions, we welcome your involvement! Feel free to fork the project and submit pull requests for any improvements or fixes you'd like to contribute. Together, we can make this link shortener even better.
