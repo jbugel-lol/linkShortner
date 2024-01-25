@@ -57,3 +57,6 @@ To make use of our link shortener, simply visit `localhost:4173` or the domain y
 ## Contributions
 
 While we currently don't have specific guidelines for contributions, we welcome your involvement! Feel free to fork the project and submit pull requests for any improvements or fixes you'd like to contribute. Together, we can make this link shortener even better.
+
+
+### Thanks for the help, InspectorRex ❤️
