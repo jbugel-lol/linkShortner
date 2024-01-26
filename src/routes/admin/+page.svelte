@@ -1,6 +1,5 @@
 <script lang="ts">
-  import { onMount } from "svelte";
-
+  import Modal from "$lib/components/Modal.svelte";
   /*
   const testLinks = [
     {
@@ -16,6 +15,8 @@
   ];
 */
 
+  let hasError = false;
+
   export let data;
 
   let testLinks = data.data;
@@ -29,9 +30,10 @@
 
   async function submitURL() {
     if (url.length <= 6 || (!url.startsWith("https://") && !url.startsWith("http://"))) {
-      return alert("Korrekte URL angeben")
+      alert("Korrekte URL angeben");
+      return;
     }
-    
+
     const result = await fetch("/create", {
       method: "POST",
       body: JSON.stringify({
@@ -90,47 +92,23 @@
     <div>
       <button
         on:click={() => {
-          newlink = !newlink;
+          newlink = true;
         }}
         class="bg-cat-surface0 font-bold p-2 px-4 rounded-xl flex gap-2 items-center"
-        ><svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-          stroke-width="2.25"
-          stroke="#a6adc8"
-          class="w-6 h-6"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M12 4.5v15m7.5-7.5h-15"
-          />
+        ><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="2.25" stroke="#a6adc8" class="w-6 h-6">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
         </svg>
         Create Link</button
       >
     </div>
   </nav>
-
+  <Modal bind:showModal={hasError}>Cannot submit link like this!</Modal>
   <div class="flex flex-col gap-4 xl:w-1/2 w-11/12 mx-auto">
-    {#if newlink}
+    <Modal bind:showModal={newlink}>
+      <p slot="header" class="text-2xl font-bold">Create a new Link</p>
       <div class="flex flex-col gap-3 mb-8">
-        <p class="text-2xl font-bold">Create a new Link</p>
-        <input
-          bind:value={url}
-          class="rounded-lg p-2 bg-cat-base"
-          type="text"
-          placeholder="Paste your url"
-          name="url"
-          id=""
-        />
-        <input
-          bind:value={id}
-          class="rounded-lg p-2 bg-cat-base"
-          type="text"
-          placeholder="name your link"
-          name="id"
-          id=""
-        />
+        <input bind:value={url} class="rounded-lg p-2 bg-cat-base" type="text" placeholder="Paste your url" name="url" id="" />
+        <input bind:value={id} class="rounded-lg p-2 bg-cat-base" type="text" placeholder="name your link" name="id" id="" />
         <button
           on:click={() => {
             submitURL();
@@ -138,18 +116,11 @@
           class="bg-cat-green text-cat-base rounded-lg p-2 font-bold">Save</button
         >
       </div>
-    {/if}
-    {#if editlink}
+    </Modal>
+    <Modal bind:showModal={editlink}>
+      <p slot="header" class="text-2xl font-bold">Update Link</p>
       <div class="flex flex-col gap-3 mb-8">
-        <p class="text-2xl font-bold">Update Link</p>
-        <input
-          bind:value={updateURL}
-          class="rounded-lg p-2 bg-cat-base"
-          type="text"
-          placeholder="Paste your url"
-          name="url"
-          id=""
-        />
+        <input bind:value={updateURL} class="rounded-lg p-2 bg-cat-base" type="text" placeholder="Paste your url" name="url" id="" />
         <button
           on:click={() => {
             submitUpdate();
@@ -157,11 +128,12 @@
           class="bg-green-600 rounded-lg p-2 font-bold">Save</button
         >
       </div>
+    </Modal>
+    {#if testLinks.length < 1}
+      <div>Such Empty :(</div>
     {/if}
     {#each testLinks as { url, id, clicks }}
-      <div
-        class="bg-cat-base justify-between p-3.5 rounded-xl px-7 items-center gridcontainer"
-      >
+      <div class="bg-cat-base justify-between p-3.5 rounded-xl px-7 items-center gridcontainer">
         <div>
           {url}
         </div>
@@ -179,19 +151,8 @@
               editlink = true;
             }}
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              class="w-6 h-6"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125"
-              />
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+              <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
             </svg>
           </button>
           <button
@@ -200,14 +161,7 @@
             }}
             class="flex items-center"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              class="w-6 h-6"
-            >
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
               <path
                 stroke-linecap="round"
                 stroke-linejoin="round"
@@ -220,9 +174,10 @@
     {/each}
   </div>
 </div>
+
 <style>
-.gridcontainer {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr auto;
-}
+  .gridcontainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr auto;
+  }
 </style>
