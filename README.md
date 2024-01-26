@@ -35,10 +35,10 @@ To get started with our link shortener, follow these simple steps:
 5. **Run the Project:**
 
    ```bash
-   npm run preview
+   node build
    ```
 
-   _Note: Make sure to configure your Nginx or Apache2 server to listen to the port specified in the console output, typically 4173._
+   _Note: Make sure to configure your Nginx or Apache2 server to listen to the port specified in the console output, typically 3000._
 
 ## Additional Configuration
 
