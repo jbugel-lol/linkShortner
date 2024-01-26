@@ -11,7 +11,7 @@ To get started with our link shortener, follow these simple steps:
 1. **Clone the Repository:**
 
    ```bash
-   git clone git@github.com:jbugel-lol/linkShortner.git
+   git clone -b Svelte-Framework git@github.com:jbugel-lol/linkShortner.git
    ```
 
 2. **Navigate to the Project Directory:**
@@ -57,6 +57,5 @@ To make use of our link shortener, simply visit `localhost:4173` or the domain y
 ## Contributions
 
 While we currently don't have specific guidelines for contributions, we welcome your involvement! Feel free to fork the project and submit pull requests for any improvements or fixes you'd like to contribute. Together, we can make this link shortener even better.
-
 
 ### Thanks for the help, InspectorRex ❤️
