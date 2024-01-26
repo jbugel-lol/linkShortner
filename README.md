@@ -48,7 +48,7 @@ To use our link shortener effectively, there are a couple of additional steps to
   You'll need to set up your own database and configure it according to your needs.
 
 - **Environment Variables:**
-  Fill out the provided `.env.example` file and rename it to `.env` with your specific configuration.
+  Fill out the provided `.env.example` file and rename it to `.env` with your specific configuration. Make sure to prefix all environment variables with `VITE_`, as Vite requires this prefix for proper export.
 
 ## How to Use
 
