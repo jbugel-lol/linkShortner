@@ -7,7 +7,15 @@
       method: "POST",
       body: JSON.stringify({ password }),
     });
-    if ((await request.json()).success) goto("/admin");
+
+    const { success } = await request.json();
+
+    if (success) {
+      goto("/admin");
+    } else {
+      password = "";
+      alert("Incorrect Admin Password");
+    }
   }
 </script>
 
@@ -15,14 +23,7 @@
   <div class="lg:w-1/4 w-11/12 mx-auto flex flex-col gap-2">
     <h1 class="font-semibold text-xl mt-8">Link Control Panel</h1>
     <!--<label for="Passord">Password:</label>-->
-    <input
-      class="rounded-lg p-2 bg-cat-crust placeholder:text-cat-text"
-      bind:value={password}
-      placeholder="Password"
-      type="password"
-      id="Password"
-      name="Password"
-    />
+    <input class="rounded-lg p-2 bg-cat-crust placeholder:text-cat-text" bind:value={password} placeholder="Password" type="password" id="Password" name="Password" />
     <!--<label for="OTP">OTP:</label><br />
             <input
                 type="text"

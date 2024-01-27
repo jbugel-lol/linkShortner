@@ -7,7 +7,6 @@ export const connection = mysql.createConnection({
   database: "URL_Custom",
 });
 
-export const password = import.meta.env.VITE_ADMIN_PASSWORD;
 startConnection();
 
 /**
@@ -30,10 +29,65 @@ export async function databaseRequest(sqlQuery) {
   });
 }
 
-function startConnection() {
+async function startConnection() {
   try {
     connection.connect();
   } catch (error) {
     console.log(error);
   }
+}
+
+/**
+ * @param {string} password
+ */
+export async function issueSessionToken(password) {
+  if (password !== import.meta.env.VITE_ADMIN_PASSWORD) {
+    return {
+      success: false,
+      message: "Admin Password is incorrect!"
+    }
+  }
+  const id = generateRandomId(32)
+
+  const result = await databaseRequest(`INSERT INTO sessions(id, expiresAT) VALUES ("${id}", ${(Date.now() + (1000 * 60 * 60 * 24 * 31))})`);
+
+  if (result.error) {
+    return { success: false, message: "Something went wrong!" }
+  }
+
+  return {
+    success: true,
+    session: id
+  }
+}
+
+/**
+ * @param {string} sessionToken
+ */
+export async function validateSessionToken(sessionToken) {
+  const result = await databaseRequest(`SELECT * FROM sessions WHERE id = ${connection.escape(sessionToken)}`);
+  if (!result.results[0]) return false;
+  if (result.results[0].expiresAT > Date.now()) {
+    return true;
+  } else {
+    databaseRequest("DELETE FROM sessions WHERE id = " + connection.escape(sessionToken));
+    return false;
+  };
+}
+
+/**
+ * @param {number} length
+ */
+export function generateRandomId(length) {
+  const characters =
+    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  let randomId = "";
+
+  length = length ?? 8;
+  for (let i = 0; i < length; i++) {
+    const randomIndex = Math.floor(Math.random() * characters.length);
+    randomId += characters.charAt(randomIndex);
+  }
+
+  return randomId;
 }

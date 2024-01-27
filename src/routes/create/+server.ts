@@ -1,15 +1,17 @@
-import { password, databaseRequest, connection } from "$lib/server";
+import { databaseRequest, connection, validateSessionToken, generateRandomId } from "$lib/server";
 import { error } from "@sveltejs/kit";
 
 /** @type {import('./$types').RequestHandler} */
 export async function POST({ request, cookies }) {
   const data = await request.json();
-  const id =
-    data.linkID?.length >= 0 ? generateRandomId(data.length) : data.linkID;
+  let id: string | null;
+    
+  if(data.linkID < 1) {id = generateRandomId(8)} else {
+    id = data.linkID
+  };
 
-  if (cookies.get("Password") !== password) throw error(403, "Forbidden");
+  if (!await validateSessionToken(cookies.get("session"))) throw error(403, "Forbidden");
 
-  // INSERT INTO urls (id,url,clicks) VALUES (${data.linkID,data.url})
   const query = await databaseRequest(
     `INSERT INTO urls (id,url,clicks) VALUES (${connection.escape(
       id
@@ -35,18 +37,4 @@ export async function POST({ request, cookies }) {
     }),
     { status: 200 }
   );
-}
-
-function generateRandomId(length: number) {
-  const characters =
-    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-  let randomId = "";
-
-  length = length ?? 8;
-  for (let i = 0; i < length; i++) {
-    const randomIndex = Math.floor(Math.random() * characters.length);
-    randomId += characters.charAt(randomIndex);
-  }
-
-  return randomId;
 }

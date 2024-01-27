@@ -13,9 +13,7 @@
       clicks: 212,
     },
   ];
-*/
-
-  let hasError = false;
+  */
 
   export let data;
 
@@ -23,13 +21,13 @@
   let newlink = false;
   let editlink = false;
 
-  let url: string = "";
-  let id: string = "";
+  let newURL: string = "";
+  let newID: string = "";
   let updateURL: string = "";
   let updateID: string = "";
 
   async function submitURL() {
-    if (url.length <= 6 || (!url.startsWith("https://") && !url.startsWith("http://"))) {
+    if (newURL.length <= 6 || (!newURL.startsWith("https://") && !newURL.startsWith("http://"))) {
       alert("Korrekte URL angeben");
       return;
     }
@@ -37,30 +35,41 @@
     const result = await fetch("/create", {
       method: "POST",
       body: JSON.stringify({
-        url,
-        linkID: id,
+        url: newURL,
+        linkID: newID,
       }),
     });
+
     const data = await result.json();
+
+    if (data.success) {
+      alert(data.error);
+      return;
+    }
+
     testLinks.push({
-      url,
+      url: newURL,
       id: data.id,
       clicks: 0,
     });
     testLinks = testLinks;
-    url = "";
-    id = "";
+    newURL = "";
+    newID = "";
     newlink = false;
   }
 
   async function deleteURL(id: string) {
-    const result = await fetch("/delete", {
+    const res = await fetch("/delete", {
       method: "POST",
       body: JSON.stringify({
         id: id,
       }),
     });
-    console.log(await result.json());
+    const data = await res.json();
+    if (!data.success) {
+      alert(data.error);
+      return;
+    }
     testLinks = testLinks.filter((v) => v.id !== id);
   }
 
@@ -72,7 +81,12 @@
         id: updateID,
       }),
     });
-    console.log(await result.json());
+
+    const data = await result.json();
+    if (!data.success) {
+      alert(data.error);
+      return;
+    }
 
     testLinks.forEach((element) => {
       if (element.id == updateID) {
@@ -86,6 +100,9 @@
   }
 </script>
 
+<svelte:head>
+  <title>Admin | jbugel.link</title>
+</svelte:head>
 <div class="bg-cat-crust min-h-screen text-cat-text">
   <nav class="flex justify-between p-8">
     <div class="font-bold text-2xl">jbugel.link</div>
@@ -102,13 +119,12 @@
       >
     </div>
   </nav>
-  <Modal bind:showModal={hasError}>Cannot submit link like this!</Modal>
   <div class="flex flex-col gap-4 xl:w-1/2 w-11/12 mx-auto">
     <Modal bind:showModal={newlink}>
       <p slot="header" class="text-2xl font-bold">Create a new Link</p>
       <div class="flex flex-col gap-3 mb-8">
-        <input bind:value={url} class="rounded-lg p-2 bg-cat-base" type="text" placeholder="Paste your url" name="url" id="" />
-        <input bind:value={id} class="rounded-lg p-2 bg-cat-base" type="text" placeholder="name your link" name="id" id="" />
+        <input bind:value={newURL} class="rounded-lg p-2 bg-cat-base" type="text" placeholder="Paste your url" name="url" />
+        <input bind:value={newID} class="rounded-lg p-2 bg-cat-base" type="text" placeholder="name your link" name="id" />
         <button
           on:click={() => {
             submitURL();

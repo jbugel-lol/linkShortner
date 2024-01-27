@@ -1,11 +1,13 @@
-import { password, databaseRequest, connection } from "$lib/server";
+import { databaseRequest, connection, validateSessionToken } from "$lib/server";
 import { error, json } from "@sveltejs/kit";
 
 /** @type {import('./$types').RequestHandler} */
 export async function PATCH({ request, cookies }) {
   const data = await request.json();
 
-  if (cookies.get("Password") !== password) throw error(403, "Forbidden");
+  console.log(data);
+
+  if (!await validateSessionToken(cookies.get("session"))) throw error(403, "Forbidden");
 
   const query = await databaseRequest(
     "UPDATE urls SET url = " +
@@ -17,6 +19,7 @@ export async function PATCH({ request, cookies }) {
   if (query.error) {
     return new Response(
       JSON.stringify({
+        success: false,
         error: query.error,
         status: 500,
       }),
@@ -25,6 +28,7 @@ export async function PATCH({ request, cookies }) {
   }
 
   return json({
+    success: true,
     newURL: data.newURL,
   });
 }
