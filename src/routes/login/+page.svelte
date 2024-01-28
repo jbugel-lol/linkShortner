@@ -1,17 +1,24 @@
-<script>
+<script lang="ts">
   import { goto } from "$app/navigation";
-  import Modal from "$lib/components/Modal.svelte";
 
   let wrongPassword = false;
   let password = "";
+  let loading: boolean = false;
 
-  async function submit() {
-    const response = await fetch("/login", {
+  async function login() {
+    loading = true;
+    if (password.length < 6) {
+      password = "";
+      loading = false;
+      return;
+    }
+
+    const request = await fetch("/login", {
       method: "POST",
       body: JSON.stringify({ password }),
     });
 
-    const { success } = await response.json();
+    const { success } = await request.json();
 
     if (success) {
       goto("/admin");
@@ -19,32 +26,44 @@
       password = "";
       wrongPassword = true;
     }
+    loading = false;
   }
 </script>
 
-<div class="bg-cat-mantle min-h-screen text-cat-subtext1">
-  <div class="lg:w-1/4 w-11/12 mx-auto flex flex-col gap-2">
-    <h1 class="font-semibold text-xl mt-8">Link Control Panel</h1>
+<svelte:head>
+  <title>Login | Jbugel.link</title>
+</svelte:head>
+<div class="bg-cat-mantle min-h-screen text-cat-subtext1 bg-[url('/wave.svg')] bg-no-repeat bg-bottom">
+  <div class="lg:w-1/4 w-9/12 mx-auto gap-6 flex flex-col">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-24 fill-cat-overlay2 mt-28 mx-auto">
+      <path
+        fill-rule="evenodd"
+        d="M19.902 4.098a3.75 3.75 0 0 0-5.304 0l-4.5 4.5a3.75 3.75 0 0 0 1.035 6.037.75.75 0 0 1-.646 1.353 5.25 5.25 0 0 1-1.449-8.45l4.5-4.5a5.25 5.25 0 1 1 7.424 7.424l-1.757 1.757a.75.75 0 1 1-1.06-1.06l1.757-1.757a3.75 3.75 0 0 0 0-5.304Zm-7.389 4.267a.75.75 0 0 1 1-.353 5.25 5.25 0 0 1 1.449 8.45l-4.5 4.5a5.25 5.25 0 1 1-7.424-7.424l1.757-1.757a.75.75 0 1 1 1.06 1.06l-1.757 1.757a3.75 3.75 0 1 0 5.304 5.304l4.5-4.5a3.75 3.75 0 0 0-1.035-6.037.75.75 0 0 1-.354-1Z"
+        clip-rule="evenodd"
+      />
+    </svg>
+    <h1 class="font-bold text-3xl mt-8">Link Control Panel</h1>
+    <input class="rounded-xl p-4 bg-cat-crust placeholder:text-cat-text focus-within:outline-none focus-within:ring-2 ring-cat-flamingo" bind:value={password} placeholder="Password" type="password" />
     <input
-      class="rounded-lg p-2 bg-cat-crust placeholder:text-cat-text"
-      bind:value={password}
-      placeholder="Password"
-      type="password"
-      id="Password"
-      name="Password"
+      class="rounded-xl p-4 bg-cat-crust placeholder:text-cat-text focus-within:outline-none focus-within:ring-2 ring-cat-flamingo"
+      type="text"
+      inputmode="numeric"
+      pattern="[0-9]*"
+      autocomplete="one-time-code"
+      maxlength="6"
+      placeholder="2FA-Token"
     />
     <button
-      on:click={submit}
-      class="bg-cat-green text-cat-crust rounded-lg p-2 font-bold mt-4"
-      type="button"
-      id="button">Login</button
+      on:click={() => {
+        login();
+      }}
+      disabled={password.length < 6}
+      class="bg-cat-blue text-cat-crust rounded-xl p-3 font-bold mt-2 disabled:opacity-75 disabled:cursor-not-allowed disabled:bg-cat-overlay1"
+      id="button"
     >
-
-    <Modal bind:showModal={wrongPassword}>
-      <p slot="header" class="text-3xl font-bold">Incorrect Password</p>
-      <div class="flex flex-col gap-3 mb-8">
-        Please enter the correct password and try again.
-      </div>
-    </Modal>
+      {#if loading}
+        <p class="animate-pulse">Logging you in...</p>
+      {:else}Login{/if}</button
+    >
   </div>
 </div>
