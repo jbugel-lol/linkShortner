@@ -52,6 +52,7 @@
       autocomplete="one-time-code"
       maxlength="6"
       placeholder="2FA-Token"
+      oninput="this.value = this.value.replace(/[^0-9]/g, '');"
     />
     <button
       on:click={() => {
