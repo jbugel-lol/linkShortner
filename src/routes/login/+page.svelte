@@ -31,7 +31,7 @@
 </script>
 
 <svelte:head>
-  <title>Login | Jbugel.link</title>
+  <title>Login | {import.meta.env.VITE_WEBSITE_DOMAIN}</title>
 </svelte:head>
 <div class="bg-cat-mantle min-h-screen text-cat-subtext1 bg-[url('/wave.svg')] bg-no-repeat bg-bottom">
   <div class="lg:w-1/4 w-9/12 mx-auto gap-6 flex flex-col">
