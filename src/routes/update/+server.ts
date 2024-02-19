@@ -7,7 +7,7 @@ export async function PATCH({ request, cookies }) {
 
   console.log(data);
 
-  if (!await validateSessionToken(cookies.get("session"))) throw error(403, "Forbidden");
+  if (!await validateSessionToken(cookies.get("session") ?? "XX")) throw error(403, "Forbidden");
 
   const query = await databaseRequest(
     "UPDATE urls SET url = " +

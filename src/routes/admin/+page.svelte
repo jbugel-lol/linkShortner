@@ -1,19 +1,5 @@
 <script lang="ts">
   import Modal from "$lib/components/Modal.svelte";
-  /*
-  const testLinks = [
-    {
-      url: "https://google.com/test",
-      id: "google",
-      clicks: 232,
-    },
-    {
-      url: "https://youtube.com",
-      id: "youtube",
-      clicks: 212,
-    },
-  ];
-  */
 
   export let data;
 
