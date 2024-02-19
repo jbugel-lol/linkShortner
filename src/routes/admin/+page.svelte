@@ -3,7 +3,7 @@
 
   export let data;
 
-  let testLinks = data.data;
+  let links = data.data;
   let newlink = false;
   let editlink = false;
 
@@ -33,15 +33,24 @@
       return;
     }
 
-    testLinks.push({
+    links.push({
       url: newURL,
       id: data.id,
       clicks: 0,
     });
-    testLinks = testLinks;
+    links = links;
     newURL = "";
     newID = "";
     newlink = false;
+  }
+
+  // TODO: Third Pary API
+  function getFavicon(url: string) {
+    var domain;
+    domain = url.split('/')[2];
+    domain = domain.split(':')[0];
+    domain = domain.split('?')[0];
+    return "https://favicone.com/"+domain + "?s=24";
   }
 
   async function deleteURL(id: string) {
@@ -56,7 +65,7 @@
       alert(data.error);
       return;
     }
-    testLinks = testLinks.filter((v) => v.id !== id);
+    links = links.filter((v) => v.id !== id);
   }
 
   async function submitUpdate() {
@@ -74,12 +83,12 @@
       return;
     }
 
-    testLinks.forEach((element) => {
+    links.forEach((element) => {
       if (element.id == updateID) {
         element.url = updateURL;
       }
     });
-    testLinks = testLinks;
+    links = links;
     updateID = "";
     updateURL = "";
     editlink = false;
@@ -131,55 +140,52 @@
         >
       </div>
     </Modal>
-    {#if testLinks.length < 1}
+    {#if links.length < 1}
       <div>Such Empty :(</div>
+    {:else}
+      {#each links as { url, id, clicks }}
+        <div class="bg-cat-base flex justify-between items-center p-6 px-12 rounded-full group">
+            <div class="grow font-semibold flex items-center gap-3 w-1/2">
+              <img class="w-6" src={getFavicon(url)} onerror="this.src='/default_fav.svg'" alt="">
+              <p class="rounded-xl">{url}</p>
+            </div> 
+            <div class="grow flex gap-2">
+              <p class="opacity-50">ID:</p>
+              <p>{id}</p>
+            </div>
+            <div class="flex gap-2 items-center bg-cat-surface0 p-1 px-3 rounded-full">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6">
+                <path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
+                <path fill-rule="evenodd" d="M1.323 11.447C2.811 6.976 7.028 3.75 12.001 3.75c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113-1.487 4.471-5.705 7.697-10.677 7.697-4.97 0-9.186-3.223-10.675-7.69a1.762 1.762 0 0 1 0-1.113ZM17.25 12a5.25 5.25 0 1 1-10.5 0 5.25 5.25 0 0 1 10.5 0Z" clip-rule="evenodd" />
+              </svg>
+              {clicks}
+            </div>
+            <div class="place-content-end gap-4 flex group-hover:ml-4 w-0 group-hover:w-16 duration-500 overflow-hidden">
+              <button
+                class="hover:fill-cat-sapphire fill-slate-300"
+                on:click={() => {
+                  updateURL = url;
+                  updateID = id;
+                  editlink = true;
+                }}
+              >
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-6 h-6">
+                <path d="M21.731 2.269a2.625 2.625 0 0 0-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 0 0 0-3.712ZM19.513 8.199l-3.712-3.712-12.15 12.15a5.25 5.25 0 0 0-1.32 2.214l-.8 2.685a.75.75 0 0 0 .933.933l2.685-.8a5.25 5.25 0 0 0 2.214-1.32L19.513 8.2Z" />
+              </svg>            
+              </button>
+              <button
+              class="hover:fill-cat-red fill-slate-300"
+                on:click={() => {
+                  deleteURL(id);
+                }}
+              >
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-6 h-6">
+                <path fill-rule="evenodd" d="M16.5 4.478v.227a48.816 48.816 0 0 1 3.878.512.75.75 0 1 1-.256 1.478l-.209-.035-1.005 13.07a3 3 0 0 1-2.991 2.77H8.084a3 3 0 0 1-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 0 1-.256-1.478A48.567 48.567 0 0 1 7.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 0 1 3.369 0c1.603.051 2.815 1.387 2.815 2.951Zm-6.136-1.452a51.196 51.196 0 0 1 3.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 0 0-6 0v-.113c0-.794.609-1.428 1.364-1.452Zm-.355 5.945a.75.75 0 1 0-1.5.058l.347 9a.75.75 0 1 0 1.499-.058l-.346-9Zm5.48.058a.75.75 0 1 0-1.498-.058l-.347 9a.75.75 0 0 0 1.5.058l.345-9Z" clip-rule="evenodd" />
+              </svg>            
+              </button>
+            </div>
+          </div>
+      {/each}
     {/if}
-    {#each testLinks as { url, id, clicks }}
-      <div class="bg-cat-base justify-between p-3.5 rounded-xl px-7 items-center gridcontainer">
-        <div>
-          {url}
-        </div>
-        <div>
-          {id}
-        </div>
-        <div>
-          {clicks}
-        </div>
-        <div class="flex place-content-end gap-2">
-          <button
-            on:click={() => {
-              updateURL = url;
-              updateID = id;
-              editlink = true;
-            }}
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-              <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
-            </svg>
-          </button>
-          <button
-            on:click={() => {
-              deleteURL(id);
-            }}
-            class="flex items-center"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"
-              />
-            </svg>
-          </button>
-        </div>
-      </div>
-    {/each}
   </div>
 </div>
-
-<style>
-  .gridcontainer {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr auto;
-  }
-</style>
