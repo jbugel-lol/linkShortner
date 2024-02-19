@@ -32,6 +32,9 @@ export async function databaseRequest(sqlQuery) {
 async function startConnection() {
   try {
     connection.connect();
+
+    // databaseRequest("CREATE TABLE urls (id VARCHAR(32) PRIMARY KEY,url TEXT,created BIGINT);");
+    // databaseRequest("CREATE TABLE clicks (id INT PRIMARY KEY NOT NULL AUTO_INCREMENT, country VARCHAR(3), timestamp BIGINT, link VARCHAR(32), FOREIGN KEY (link) REFERENCES urls(id) ON DELETE CASCADE);")
   } catch (error) {
     console.log(error);
   }

@@ -17,13 +17,13 @@ export async function POST({ request, cookies }) {
     id = data.linkID;
   }
 
-  if (!(await validateSessionToken(cookies.get("session"))))
+  if (!(await validateSessionToken(cookies.get("session") ?? "XX")))
     throw error(403, "Forbidden");
 
   const query = await databaseRequest(
-    `INSERT INTO urls (id,url,clicks) VALUES (${connection.escape(
+    `INSERT INTO urls (id,url,created) VALUES (${connection.escape(
       id
-    )},${connection.escape(data.url)},0)`
+    )},${connection.escape(data.url)},${Date.now()})`
   );
 
   if (query.error) {
