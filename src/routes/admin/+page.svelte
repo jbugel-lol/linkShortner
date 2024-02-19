@@ -36,7 +36,7 @@
       method: "POST",
       body: JSON.stringify({
         url: newURL,
-        linkID: newID,
+        linkID: newID.length > 0 ? newID : null,
       }),
     });
 
@@ -121,7 +121,7 @@
   </nav>
   <div class="flex flex-col gap-4 xl:w-1/2 w-11/12 mx-auto">
     <Modal bind:showModal={newlink}>
-      <p slot="header" class="text-2xl font-bold">Create a new Link</p>
+      <p slot="header" class="text-2xl font-bold text-cat-text">Create a new Link</p>
       <div class="flex flex-col gap-3 mb-8">
         <input bind:value={newURL} class="rounded-lg p-2 bg-cat-base" type="text" placeholder="Paste your url" name="url" />
         <input bind:value={newID} class="rounded-lg p-2 bg-cat-base" type="text" placeholder="name your link" name="id" />
