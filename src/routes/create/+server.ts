@@ -11,7 +11,7 @@ export async function POST({ request, cookies }) {
   const data = await request.json();
   let id: string | null;
 
-  if (data.linkID) {
+  if (!data.linkID) {
     id = generateRandomId(8);
   } else {
     id = data.linkID;
