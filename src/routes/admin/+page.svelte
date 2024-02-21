@@ -57,7 +57,7 @@
   <UpdateLink bind:editlink bind:updateID bind:links />
   <div class="flex flex-col gap-4 xl:w-1/2 w-11/12 mx-auto">
     {#if links.length < 1}
-      <div class="mx-auto w-max mt-12 text-xl font-bold">Such Empty :(</div>
+      <div class="mx-auto w-max mt-12 text-xl font-bold">Such Empty :3</div>
     {:else}
       {#each links as { url, id, clicks }}
         <div class="bg-cat-base flex lg:flex-row flex-col gap-6 justify-between items-center p-4 lg:p-6 lg:px-12 lg:rounded-full rounded-2xl group">
