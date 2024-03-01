@@ -1,7 +1,8 @@
 interface Link {
     id: string,
     url: string,
-    clicks?: number
+    clicks?: number,
+    country_clicks: string
 }
 
 export type {Link}
