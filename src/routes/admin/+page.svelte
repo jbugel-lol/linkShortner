@@ -76,7 +76,7 @@
               clip-rule="evenodd"
             />
           </svg>
-          {clicks}
+          {clicks == null ? 0 : clicks}
           <CountryView countries={country_clicks} />
         </div>
         <div class="place-content-end gap-4 flex group-hover:ml-4 lg:w-0 group-hover:w-16 duration-500 overflow-hidden">
