@@ -13,6 +13,8 @@
       return;
     }
 
+    await new Promise(resolve => setTimeout(resolve, 1500));
+
     const request = await fetch("/login", {
       method: "POST",
       body: JSON.stringify({ password }),
@@ -53,6 +55,7 @@
       maxlength="6"
       placeholder="2FA-Token"
       oninput="this.value = this.value.replace(/[^0-9]/g, '');"
+      disabled
     />
     <button
       on:click={() => {
@@ -63,7 +66,7 @@
       id="button"
     >
       {#if loading}
-        <p class="animate-pulse">Logging you in...</p>
+        <span class="loading loading-spinner loading-xs"></span>
       {:else}Login{/if}</button
     >
   </div>
