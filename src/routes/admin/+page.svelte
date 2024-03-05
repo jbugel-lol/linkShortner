@@ -11,10 +11,10 @@
   let editlink = false;
   let updateID = "";
 
-function getFavicon(url: string) {
-  const domain = new URL(url).hostname;
-  return "https://favicone.com/" + domain + "?s=24";
-}
+  function getFavicon(url: string) {
+    const domain = new URL(url).hostname;
+    return "https://favicone.com/" + domain + "?s=24";
+  }
 
   async function deleteURL(id: string) {
     const res = await fetch("/delete", {

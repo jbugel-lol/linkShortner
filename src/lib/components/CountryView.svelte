@@ -1,10 +1,10 @@
 <script lang="ts">
     export let countries: string;
 
-    let countryArray;
-    if (countries) {
+    let countryArray: Array<{ country: string; clicks: number }> | any;
+    try {
         countryArray = Object.entries(JSON.parse(countries)).map(([country, clicks]) => ({ country, clicks }));
-    } else {
+    } catch {
         countryArray = [];
     }
 </script>
