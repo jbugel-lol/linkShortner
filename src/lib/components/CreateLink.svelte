@@ -31,6 +31,7 @@
             url: newURL,
             id: data.id,
             clicks: 0,
+            country_clicks: [],
         });
         links = links;
         newURL = "";
