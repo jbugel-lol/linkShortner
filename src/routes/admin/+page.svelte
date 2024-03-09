@@ -33,11 +33,11 @@
 </script>
 
 <svelte:head>
-  <title>Admin | jbugel.link</title>
+  <title>Admin | {import.meta.env.VITE_WEBSITE_DOMAIN}</title>
 </svelte:head>
 <div class="bg-cat-crust min-h-screen text-cat-text">
   <nav class="flex justify-between p-8">
-    <div class="font-bold text-2xl">jbugel.link</div>
+    <div class="font-bold text-2xl">{import.meta.env.VITE_WEBSITE_DOMAIN}</div>
     <div>
       <button
         on:click={() => {
