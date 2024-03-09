@@ -1,9 +1,12 @@
 <script lang="ts">
+    import { goto } from "$app/navigation";
+    import { page } from "$app/stores";
     import type { Link } from "$lib/types";
     import Modal from "./Modal.svelte";
 
-    export let updateID: string | null, editlink: boolean, links: Link[];
+    export let editlink: boolean, links: Link[];
 
+    let updateID: string | null = $page.url.searchParams.get("updateLink");
     let updateURL: string;
 
     async function submitUpdate() {
@@ -33,7 +36,14 @@
     }
 </script>
 
-<Modal bind:showModal={editlink}>
+<Modal
+    bind:showModal={editlink}
+    onClose={() => {
+        const query = $page.url.searchParams;
+        query.delete("updateLink");
+        goto(`?${query}`);
+    }}
+>
     <p slot="header" class="text-2xl font-bold">Update Link</p>
     <div class="flex flex-col gap-3 mb-8">
         <input bind:value={updateURL} class="rounded-lg p-2 bg-cat-base" type="text" placeholder="Paste your url" name="url" id="" />

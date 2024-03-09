@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { goto } from "$app/navigation";
+  import { page } from "$app/stores";
   import CountryView from "$lib/components/CountryView.svelte";
   import CreateLink from "$lib/components/CreateLink.svelte";
   import UpdateLink from "$lib/components/UpdateLink.svelte";
@@ -7,9 +9,7 @@
   export let data;
 
   let links: Link[] = data.data;
-  let newLinkModal = true;
-  let editlink = false;
-  let updateID = "";
+  let newLinkModal = false;
 
   function getFavicon(url: string) {
     const domain = new URL(url).hostname;
@@ -52,7 +52,7 @@
     </div>
   </nav>
   <CreateLink bind:newlink={newLinkModal} bind:links />
-  <UpdateLink bind:editlink bind:updateID bind:links />
+  <UpdateLink editlink={$page.url.searchParams.has("updateLink")} bind:links />
   <div class="flex flex-col gap-4 xl:w-1/2 w-11/12 mx-auto">
     {#each links as { url, id, clicks, country_clicks }}
       <div class="bg-cat-base flex lg:flex-row flex-col gap-6 justify-between items-center p-4 lg:p-6 lg:px-12 lg:rounded-full rounded-2xl group">
@@ -80,8 +80,7 @@
           <button
             class="hover:fill-cat-sapphire fill-slate-300"
             on:click={() => {
-              updateID = id;
-              editlink = true;
+              goto(`?updateLink=${id}`);
             }}
           >
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-6 h-6">

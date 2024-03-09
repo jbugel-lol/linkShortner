@@ -1,15 +1,22 @@
 <script lang="ts">
     export let showModal: boolean;
+    export let onClose: Function = () => {};
+
     let dialog: HTMLDialogElement;
     $: if (dialog && showModal) dialog.showModal();
-    $: if (dialog && !showModal) dialog.close();
+    $: if (dialog && !showModal) {
+        dialog.close();
+    }
 </script>
 
 <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
 <dialog
     class="dark:backdrop:bg-cat-crust/75 backdrop:bg-cat-mantle/75 bg-transparent fill-slate-200 lg:mt-24 mt-12 w-11/12 xl:w-1/2"
     bind:this={dialog}
-    on:close={() => (showModal = false)}
+    on:close={() => {
+        showModal = false;
+        onClose();
+    }}
     on:keydown|self={() => dialog.close()}
     on:click|self={() => dialog.close()}
 >
