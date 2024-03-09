@@ -44,7 +44,7 @@
         goto(`?${query}`);
     }}
 >
-    <p slot="header" class="text-2xl font-bold">Update Link</p>
+    <p slot="header" class="text-2xl font-bold text-cat-text">Update Link</p>
     <div class="flex flex-col gap-3 mb-8">
         <input bind:value={updateURL} class="rounded-lg p-2 bg-cat-base" type="text" placeholder="Paste your url" name="url" id="" />
         <button
