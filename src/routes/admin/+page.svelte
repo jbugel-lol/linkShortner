@@ -7,7 +7,7 @@
   export let data;
 
   let links: Link[] = data.data;
-  let newLinkModal = false;
+  let newLinkModal = true;
   let editlink = false;
   let updateID = "";
 

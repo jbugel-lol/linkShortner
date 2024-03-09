@@ -10,4 +10,4 @@ interface CountryClicks {
     clicks: number
 }
 
-export type {Link}
+export type {Link, CountryClicks}

@@ -40,15 +40,22 @@
 </script>
 
 <Modal bind:showModal={newlink}>
-    <p slot="header" class="text-2xl font-bold text-cat-text">Create a new Link</p>
-    <div class="flex flex-col gap-3 mb-8">
-        <input bind:value={newURL} class="rounded-lg p-2 bg-cat-base" type="text" placeholder="Paste your url" name="url" />
-        <input bind:value={newID} class="rounded-lg p-2 bg-cat-base" type="text" placeholder="name your link" name="id" />
-        <button
-            on:click={() => {
-                submitURL();
-            }}
-            class="bg-cat-green text-cat-base rounded-lg p-2 font-bold">Save</button
-        >
+    <p slot="header" class="text-2xl font-bold text-cat-text">Add Link</p>
+
+    <div class="flex flex-col gap-3 mt-4">
+        <label class="w-max font-semibold text-lg" for="url">Long Url</label>
+        <input bind:value={newURL} class="rounded-lg p-4 px-6 bg-cat-surface0 focus-within:outline-none focus-within:ring-2 ring-cat-surface2" type="text" placeholder="Paste your url" name="url" />
     </div>
+
+    <div class="flex flex-col gap-3 mt-4">
+        <label class="w-max font-semibold text-lg" for="id">Link ID</label>
+        <input bind:value={newID} class="rounded-lg p-4 px-6 bg-cat-surface0 focus-within:outline-none focus-within:ring-2 ring-cat-surface2" type="text" placeholder="name your link" name="id" />
+    </div>
+
+    <button
+        on:click={() => {
+            submitURL();
+        }}
+        class="bg-cat-green text-cat-base rounded-lg p-3 font-bold mt-8 w-full">Save</button
+    >
 </Modal>

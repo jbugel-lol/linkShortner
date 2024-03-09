@@ -1,7 +1,9 @@
 <script lang="ts">
-    export let countries: string;
+    import type { CountryClicks } from "$lib/types";
 
-    let countryArray: Array<{ country: string; clicks: number }> | any;
+    export let countries: CountryClicks[] | string;
+
+    let countryArray: CountryClicks[] | any;
     try {
         countryArray = Object.entries(JSON.parse(countries)).map(([country, clicks]) => ({ country, clicks }));
     } catch {

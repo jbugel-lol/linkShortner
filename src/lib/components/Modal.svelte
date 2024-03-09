@@ -13,13 +13,14 @@
     on:keydown|self={() => dialog.close()}
     on:click|self={() => dialog.close()}
 >
-    <div class="p-8 rounded-xl bg-cat-base mb-12">
+    <div class="p-8 rounded-xl bg-cat-base">
         <div class="flex justify-between items-center mb-6">
             <slot name="header" />
-            <button class="outline-none" on:click={() => dialog.close()}>
-                <svg class="w-8" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" /></svg></button
+            <button class="outline-none hover:bg-cat-surface1 rounded-lg p-2" on:click={() => dialog.close()}>
+                <svg class="w-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" /></svg></button
             >
         </div>
+        <hr class="bg-cat-surface1 border-0 h-px" />
         <slot />
     </div>
 </dialog>
