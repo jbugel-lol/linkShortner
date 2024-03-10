@@ -4,6 +4,14 @@
 
 Welcome to our Link Shortener project built using SvelteKit! Our link shortener offers minimal tracking, keeping your data private. We've designed it with a sleek and stylish interface inspired by the [Catppuccin Mocha theme](https://github.com/catppuccin/catppuccin#-palette). As part of our commitment to openness, this project is Free and Open Source Software (FOSS). We've also implemented a secure login page with password authentication for added protection.
 
+---
+# Stats
+
+![GitHub last commit](https://img.shields.io/github/last-commit/jbugel-lol/linkShortner?display_timestamp=committer&logo=github)
+![GitHub repo size](https://img.shields.io/github/repo-size/jbugel-lol/linkShortner)
+
+---
+
 ## Getting Started
 
 To get started with our link shortener, follow these simple steps:
