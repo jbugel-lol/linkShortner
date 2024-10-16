@@ -19,7 +19,7 @@ To get started with our link shortener, follow these simple steps:
 1. **Clone the Repository:**
 
    ```bash
-   git clone git@github.com:jbugel-lol/linkShortner.git
+   git clone https://github.com/jbugel-lol/linkShortner.git
    ```
 
 2. **Navigate to the Project Directory:**
