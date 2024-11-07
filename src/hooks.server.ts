@@ -6,7 +6,6 @@ export const handle: Handle = async ({ event, resolve }) => {
 
     if (url.pathname.startsWith("/admin")) {
         const session = event.cookies.get("session");
-        const url: URL = new URL(event.request.url);
         const user = await prisma.session.findFirst({
             where: {
                 id: session,

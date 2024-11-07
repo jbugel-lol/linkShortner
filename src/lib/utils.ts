@@ -21,3 +21,8 @@ export function generateRandomId(length: number) {
 
     return randomId;
 }
+
+export function getFavicon(url: string | null): string {
+    const domain = new URL(url ?? "").hostname;
+    return "https://favicone.com/" + domain + "?s=24";
+}

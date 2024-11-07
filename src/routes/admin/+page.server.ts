@@ -5,13 +5,17 @@ import { error } from "@sveltejs/kit";
 export async function load({ request, locals }) {
     if (!locals.session) return error(403);
     const country = request.headers.get(import.meta.env.VITE_COUNTRY_HEADER) ?? null;
+    const pageSize = 50;
 
     const data = await prisma.url.findMany({
-        take: 50,
+        take: pageSize,
         where: {
             location: {
                 not: null
             }
+        },
+        orderBy: {
+            created: "desc"
         },
         include: {
             _count: {
@@ -20,8 +24,12 @@ export async function load({ request, locals }) {
         }
     })
 
+    const counted = await prisma.url.count();
+
     return {
         data,
-        country_code_detected: country != null
+        country_code_detected: country != null,
+        pageSize,
+        countedUrls: counted
     };
 }
