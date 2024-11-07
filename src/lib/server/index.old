@@ -1,0 +1,108 @@
+// import mysql from "mysql";
+
+// export const connection = mysql.createConnection({
+//   host: import.meta.env.VITE_DATABASE_HOST,
+//   user: import.meta.env.VITE_DATABASE_USER,
+//   password: import.meta.env.VITE_DATABASE_PASSWORD,
+//   database: import.meta.env.VITE_DATABASE_NAME,
+// });
+
+// async function startConnection() {
+//   try {
+//     connection.connect((error) => {
+//       if (error) {
+//         console.error("Connection error:", error);
+//         setTimeout(startConnection, 5000); // Retry connection after 5 seconds
+//       } else {
+//         console.log("Connected to database!");
+//       }
+//     });
+//   } catch (error) {
+//     console.log("Connection attempt failed:", error);
+//   }
+// }
+
+
+// /**
+//  * @param sqlQuery {string}
+//  * @returns Promise<{{ results: [], error: null | string}}>
+//  */
+// export async function databaseRequest(sqlQuery) {
+//   return new Promise((resolve, reject) => {
+//     connection.query(sqlQuery, (error, results) => {
+//       if (error) {
+//         if (connection.state === "disconnected") {
+//           startConnection();
+//         }
+//         console.log(error);
+//         reject({ results: null, error: "Something went wrong!" });
+//       } else {
+//         resolve({ results, error: null });
+//       }
+//     });
+//   });
+// }
+
+// async function startConnection() {
+//   try {
+//     connection.connect();
+//     // databaseRequest("CREATE TABLE urls (id VARCHAR(32) PRIMARY KEY,url TEXT,created BIGINT);");
+//     // databaseRequest("CREATE TABLE clicks (id INT PRIMARY KEY NOT NULL AUTO_INCREMENT, country VARCHAR(3), timestamp BIGINT, link VARCHAR(32), FOREIGN KEY (link) REFERENCES urls(id) ON DELETE CASCADE);")
+//   } catch (error) {
+//     console.log(error);
+//   }
+// }
+
+// /**
+//  * @param {string} password
+//  */
+// export async function issueSessionToken(password) {
+//   if (connection.state === 'disconnected') {
+//     return {
+//       succes: false,
+//       message: "Failed to Connect to Database!"
+//     }
+//   }
+
+
+//   if (password !== import.meta.env.VITE_ADMIN_PASSWORD) {
+//     return {
+//       success: false,
+//       message: "Admin Password is incorrect!"
+//     }
+//   }
+//   const id = generateRandomId(32)
+
+//   let result;
+//   try {
+//     result = await databaseRequest(`INSERT INTO sessions(id, expiresAT) VALUES ("${id}", ${(Date.now() + (1000 * 60 * 60 * 24 * 31))})`);
+//   } catch (error) {
+//     return {
+//       success: false,
+//       message: "Something went wrong!"
+//     }
+//   }
+
+//   if (result.error) {
+//     return { success: false, message: "Something went wrong!" }
+//   }
+
+//   return {
+//     success: true,
+//     session: id
+//   }
+// }
+
+// /**
+//  * @param {string} sessionToken
+//  */
+// export async function validateSessionToken(sessionToken) {
+//   const result = await databaseRequest(`SELECT * FROM sessions WHERE id = ${connection.escape(sessionToken)}`);
+//   if (!result.results[0]) return false;
+//   if (result.results[0].expiresAT > Date.now()) {
+//     return true;
+//   } else {
+//     databaseRequest("DELETE FROM sessions WHERE id = " + connection.escape(sessionToken));
+//     return false;
+//   };
+// }

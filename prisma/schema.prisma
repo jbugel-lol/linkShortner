@@ -1,0 +1,32 @@
+datasource db {
+    provider = "sqlite"
+    url      = "file:./database.db"
+}
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+model session {
+    id         String   @id
+    created    DateTime @default(now())
+    validUntil DateTime
+}
+
+model url {
+    id       String   @id
+    clicks   Int
+    created  DateTime @default(now())
+    location String?
+    visit    visit[]
+}
+
+model visit {
+    id         String   @id @default(cuid())
+    country    String?
+    deviceType String?
+    created    DateTime @default(now())
+
+    url   url    @relation(fields: [urlID], references: [id])
+    urlID String
+}
