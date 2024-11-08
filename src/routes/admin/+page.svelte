@@ -47,7 +47,7 @@
   <nav class="grid grid-rows-3 grid-cols-8 p-8">
     <h1 class="font-bold text-2xl col-span-1 place-content-center">{import.meta.env.VITE_WEBSITE_DOMAIN}</h1>
 
-    <div class="col-span-6 place-content-center flex">
+    <div class="col-span-6 place-content-center flex w-full">
       <CreateLink on:newLink={handlenewLink} />
     </div>
 

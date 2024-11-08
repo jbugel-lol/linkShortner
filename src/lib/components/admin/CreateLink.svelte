@@ -27,5 +27,15 @@
     }
 </script>
 
-<input bind:value={submitURL} placeholder="Paste Url..." class="input input-primary bg-ctp-mantle w-full max-w-2xl rounded-r-none" type="search" />
-<button on:click={send} class="btn btn-primary rounded-l-none"> <div class="w-6"><Icon.Send /></div></button>
+<div class="max-w-2xl w-full flex place-content-center relative group">
+    <input bind:value={submitURL} placeholder="Paste Url..." class="input input-primary bg-ctp-mantle rounded-r-none w-full group-focus-within:rounded-b-none" type="search" />
+    <button on:click={send} class="btn btn-primary rounded-l-none group-focus-within:rounded-b-none"> <div class="w-6"><Icon.Send /></div></button>
+    <div class="absolute top-full left-0 w-full duration-300 bg-ctp-mantle border border-t-0 border-primary rounded-b-xl p-4 hidden group-focus-within:inline-block">
+        <h2 class="font-bold text-start text-lg">Link Settings</h2>
+        <p class="text-sm text-start font-medium">Customize how your Link will behave</p>
+        <div class="flex items-center gap-3 mt-6">
+            <p class="text-nowrap">Link ID</p>
+            <input placeholder="Enter Link ID" type="text" class="input input-ghost w-full bg-ctp-mantle" />
+        </div>
+    </div>
+</div>
