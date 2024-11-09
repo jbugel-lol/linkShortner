@@ -1,6 +1,6 @@
 import prisma from "$lib/server/prisma";
 import { generateRandomId } from "$lib/utils";
-import { error, json } from "@sveltejs/kit";
+import { error, json, type Actions } from "@sveltejs/kit";
 
 
 export async function GET({ request, locals }) {
@@ -40,6 +40,7 @@ export async function POST({ request, locals }) {
     const data = await request.json();
 
     let url: string | null = validateAndPrefixUrl(data.url);
+
 
     if (!url) {
         error(400, {

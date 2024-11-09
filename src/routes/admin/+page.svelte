@@ -73,8 +73,8 @@
     {#each links as { location, id, clicks }}
       <div class="bg-ctp-mantle flex lg:flex-row flex-col gap-6 justify-between items-center p-4 lg:p-6 lg:px-8 lg:rounded-xl rounded-2xl group">
         <div class="grow font-semibold flex items-center gap-3 w-1/2">
-          <img class="w-8" src={getFavicon(location)} alt="Favicon" />
-          <div class="flex flex-col gap-1 text-start">
+          <img class="w-9" src={getFavicon(location)} alt="Favicon" />
+          <div class="flex flex-col text-start">
             <p>{id}</p>
             <p class="text-accent text-xs font-medium">{location?.replace("https://", "")}</p>
           </div>
@@ -93,9 +93,8 @@
             <img class="w-5" src="icons/trash.svg" alt="Delete Link" />
           </button>
         </div>
-        <CopyLink url={"https://" + import.meta.env.VITE_WEBSITE_DOMAIN + "/" + id} />
+        <CopyLink url={import.meta.env.VITE_DOMAIN + "/" + id} />
       </div>
-      
     {:else}
       <div class="mx-auto w-max mt-12 text-xl font-bold">Such Empty :3</div>
     {/each}
