@@ -14,7 +14,7 @@
 
 <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
 <dialog
-    class="dark:backdrop:bg-slate-800/90 z-40 backdrop:bg-slate-300/75 dark:text-slate-100 bg-transparent lg:mt-12 mb-0 lg:origin-center origin-bottom lg:w-max max-w-2xl min-w-full lg:min-w-0"
+    class="dark:backdrop:bg-ctp-mantle/75 z-40 backdrop:bg-slate-300/75 dark:text-ctp-text bg-transparent lg:mt-12 mb-0 lg:origin-center origin-bottom lg:w-max max-w-2xl min-w-full lg:min-w-0"
     bind:this={dialog}
     on:close={runOnClose}
     on:keydown|self={() => dialog.close()}

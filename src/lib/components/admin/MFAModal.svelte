@@ -46,7 +46,7 @@
 
 <Modal bind:showModal={show2FAModal}>
     <h2 slot="header" class="text-2xl font-semibold mb-4">Enable 2FA</h2>
-    <div class="text-white rounded-lg shadow-lg p-8 max-w-md">
+    <div class="text-ctp-text rounded-lg shadow-lg p-8 max-w-md">
         <p class="mb-4 font-medium">Authenticator Secret <span>{totp.secret.base32}</span></p>
         {#if qrCodeDataUrl}
             <img class="mb-4 mx-auto" src={qrCodeDataUrl} alt="2FA QR Code" />
