@@ -17,6 +17,7 @@ model url {
     id       String   @id
     clicks   Int
     created  DateTime @default(now())
+    updated  DateTime @default(now()) @updatedAt
     location String?
     visit    visit[]
 }

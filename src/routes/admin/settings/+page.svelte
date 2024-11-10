@@ -13,14 +13,6 @@
 <div class="mx-auto max-w-7xl">
     <MfaModal bind:show2FAModal />
 
-    <h1 class="text-3xl font-bold pt-16">App Settings</h1>
-
-    <div class="breadcrumbs mt-12">
-        <ul>
-            <li><a href="/admin">Dashboard</a></li>
-            <li>Settings</li>
-        </ul>
-    </div>
     <div class="container border-2 rounded-xl border-ctp-surface2 flex flex-col mt-2 divide-y divide-ctp-surface2 overflow-hidden">
         <SettingsItem
             name="2 Factor Authentication"

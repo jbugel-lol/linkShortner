@@ -31,7 +31,7 @@ export async function GET({ request, locals }) {
         skip: parseInt(size) * (parseInt(page) - 1)
     })
 
-    return json({ ...urls })
+    return json({ urls })
 }
 
 export async function POST({ request, locals }) {

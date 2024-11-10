@@ -2,8 +2,8 @@
 node_modules
 /build
 /.svelte-kit
-/prisma/database.db
-/prisma/migrations
+/prisma
+!/prisma/schema.prisma
 /package
 .env
 .env.*

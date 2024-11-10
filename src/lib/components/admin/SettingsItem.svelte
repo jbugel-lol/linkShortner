@@ -2,10 +2,10 @@
     import type { ComponentType } from "svelte";
 
     export let name: string,
-        description: string | null,
+        description: string | null = "",
         buttonName: string,
         buttonAction: () => void,
-        icon: ComponentType | undefined = undefined;
+        icon: ComponentType | undefined;
 </script>
 
 <div class="flex items-center justify-between hover:bg-ctp-mantle transition-colors duration-300 cursor-pointer p-6">

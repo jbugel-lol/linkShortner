@@ -1,6 +1,7 @@
 <script lang="ts">
     export let showModal: boolean;
     export let onclose: Function = () => {};
+    export let className: string = "";
     let dialog: HTMLDialogElement;
     $: if (dialog && showModal) dialog.showModal();
     $: if (dialog && !showModal) dialog.close();
@@ -13,14 +14,10 @@
 </script>
 
 <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
-<dialog
-    class="dark:backdrop:bg-ctp-mantle/75 z-40 backdrop:bg-slate-300/75 dark:text-ctp-text bg-transparent lg:mt-12 mb-0 lg:origin-center origin-bottom lg:w-max max-w-2xl min-w-full lg:min-w-0"
-    bind:this={dialog}
-    on:close={runOnClose}
-    on:keydown|self={() => dialog.close()}
-    on:click|self={() => dialog.close()}
->
-    <div class="p-8 lg:rounded-xl rounded-t-3xl bg-ctp-mantle lg:mb-12 shadow-sm">
+<!-- class="backdrop:bg-ctp-surface0/75 z-50 text-slate-100 bg-transparent lg:mt-12 mb-0 lg:origin-center origin-bottom lg:w-1/2 min-w-full lg:min-w-0" -->
+<dialog class="modal modal-bottom" bind:this={dialog} on:close={runOnClose} on:keydown|self={() => dialog.close()} on:click|self={() => dialog.close()}>
+    <!-- p-8 lg:rounded-xl rounded-t-3xl bg-ctp-mantle lg:mb-12 shadow-sm {className} -->
+    <div class="modal-box max-w-5xl mx-auto {className}">
         <div class="flex justify-between items-center">
             <slot name="header" />
             <button class="ml-auto outline-none btn btn-ghost rounded-2xl p-1" on:click={() => dialog.close()}>
@@ -35,7 +32,7 @@
 </dialog>
 
 <style>
-    dialog[open] {
+    /* dialog[open] {
         animation: zoom 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
@@ -60,5 +57,5 @@
     }
     button {
         display: block;
-    }
+    } */
 </style>

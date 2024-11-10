@@ -5,7 +5,7 @@ import { error } from "@sveltejs/kit";
 export async function load({ request, locals }) {
     if (!locals.session) return error(403);
     const country = request.headers.get(import.meta.env.VITE_COUNTRY_HEADER) ?? null;
-    const pageSize = 50;
+    const pageSize = 25;
 
     const data = await prisma.url.findMany({
         take: pageSize,
@@ -24,7 +24,13 @@ export async function load({ request, locals }) {
         }
     })
 
-    const counted = await prisma.url.count();
+    const counted = await prisma.url.count({
+        where: {
+            location: {
+                not: null
+            }
+        }
+    });
 
     return {
         data,
