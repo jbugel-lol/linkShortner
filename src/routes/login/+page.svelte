@@ -1,15 +1,26 @@
 <script lang="ts">
   import { applyAction, enhance } from "$app/forms";
   import { goto } from "$app/navigation";
+  import { onMount } from "svelte";
+  import { slide } from "svelte/transition";
+
+  export let data;
 
   let password = "";
   let loading: boolean = false;
   export let form;
+
+  onMount(() => {
+    setTimeout(() => {
+      data.expired = false;
+    }, 10 * 1000);
+  });
 </script>
 
 <svelte:head>
   <title>Login | {import.meta.env.VITE_WEBSITE_DOMAIN}</title>
 </svelte:head>
+
 <div class="bg-cat-mantle min-h-screen text-cat-subtext1 bg-[url('/wave.svg')] bg-no-repeat bg-bottom">
   <form
     use:enhance={({ formElement, formData, action, cancel }) => {
@@ -33,6 +44,14 @@
   >
     <img src="icons/logo.svg" alt="Logo" class="w-24 fill-cat-overlay2 mt-28 mx-auto" />
     <h1 class="font-bold text-3xl mt-8">Link Control Panel</h1>
+    {#if data.expired}
+      <div out:slide role="alert" class="alert alert-info">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="h-6 w-6 shrink-0 stroke-current">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
+        <span>Your Session Expired. Please Login again!</span>
+      </div>
+    {/if}
 
     {#if form?.success == false}
       <div role="alert" class="alert alert-error">

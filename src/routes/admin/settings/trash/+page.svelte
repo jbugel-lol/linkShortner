@@ -83,7 +83,7 @@
             />
             <div class="grow font-semibold flex items-center gap-3 w-1/2">
                 <div class="flex flex-col text-start">
-                    <p>{url.id}</p>
+                    <p>ID: <b>{url.id}</b></p>
                 </div>
             </div>
             <span class="badge badge-error">
@@ -99,6 +99,8 @@
                 </Button>
             </div>
         </div>
+    {:else}
+        <div class="text-center">No URLs found</div>
     {/each}
 
     {#if data.urls.length < data.countedUrls}

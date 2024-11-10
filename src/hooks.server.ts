@@ -6,6 +6,11 @@ export const handle: Handle = async ({ event, resolve }) => {
 
     if (url.pathname.startsWith("/admin")) {
         const session = event.cookies.get("session");
+
+        if (!session) {
+            return redirect(307, "/login");
+        }
+
         const user = await prisma.session.findFirst({
             where: {
                 id: session,
@@ -17,11 +22,11 @@ export const handle: Handle = async ({ event, resolve }) => {
             }
         })
 
-        if (!session) {
+        if (!user) {
             event.cookies.delete("session", {
                 path: "/"
             });
-            return redirect(307, "/login");
+            return redirect(307, "/login?expired=true");
         }
 
         //@ts-ignore

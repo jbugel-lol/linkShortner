@@ -2,6 +2,11 @@ import prisma from "$lib/server/prisma";
 import { generateRandomId } from "$lib/utils";
 import { fail, redirect, type Actions } from "@sveltejs/kit";
 
+export async function load({ request, locals, cookies }) {
+  if (new URL(request.url).searchParams.get("expired")) return { expired: true };
+  if (cookies.get("session")) return redirect(302, "/admin");
+};
+
 export const actions = {
   default: async ({ request, cookies }) => {
     const data = await request.formData();

@@ -8,8 +8,12 @@
         <ul>
             <li><a href="/admin">Dashboard</a></li>
             <li class="capitalize"><a href="/admin/settings">Settings</a></li>
-            {#each $page.url.pathname.split("/").slice(3) as path}
-                <li class="capitalize"><a href="/admin/{path}">{path}</a></li>
+            {#each $page.url.pathname.split("/").slice(3) as path, index}
+                {#if index === $page.url.pathname.split("/").slice(3).length - 1}
+                    <li class="capitalize">{path}</li>
+                {:else}
+                    <li class="capitalize"><a href="/admin/settings/{path}">{path}</a></li>
+                {/if}
             {/each}
         </ul>
     </div>
