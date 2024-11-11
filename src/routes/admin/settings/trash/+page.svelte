@@ -1,7 +1,8 @@
 <script lang="ts">
     import { invalidateAll } from "$app/navigation";
     import Button from "$lib/components/Button.svelte";
-    import { Icon } from "$lib/icons";
+    import Icon from "$lib/components/Icon.svelte";
+    import { Icons } from "$lib/icons";
 
     export let data;
     let deletingIDs: string[] = [];
@@ -61,7 +62,7 @@
         <span class="label-text">Select all ({data.urls.length})</span>
     </label>
     <Button className={deletingIDs.length == 0 ? "btn-disabled" : "btn-error"} onclick={() => deleteURL(null)}
-        ><div slot="icon" class="w-6"><Icon.Trash /></div>
+        ><div slot="icon" class="w-6"><Icons.Trash /></div>
         Delete Selected</Button
     >
 </div>
@@ -90,12 +91,12 @@
                 Deleted {new Date(url.updated).toLocaleString(undefined, { dateStyle: "short", timeStyle: "short" })}
             </span>
             <div class="flex gap-2 items-center fill-ctp-text">
-                <div class="w-5"><Icon.Eye /></div>
+                <Icon icon={Icons.Eye} className="w-5" />
                 {url.clicks == null ? 0 : url.clicks}
             </div>
             <div class="flex gap-4 items-center">
                 <Button className="btn btn-ghost" onclick={() => deleteURL(url.id)}>
-                    <div slot="icon" class="w-6 hover:fill-cat-red fill-ctp-red"><Icon.Trash /></div>
+                    <div slot="icon" class="w-6 hover:fill-cat-red fill-ctp-red"><Icons.Trash /></div>
                 </Button>
             </div>
         </div>

@@ -7,7 +7,7 @@ import Send from "./send.svelte";
 import Settings from "./settings.svelte";
 import Trash from "./trash.svelte";
 
-export const Icon = {
+export const Icons = {
     Badge: Badge,
     DatabaseOff: DatabaseOff,
     Settings: Settings,

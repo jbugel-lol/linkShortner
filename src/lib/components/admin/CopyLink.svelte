@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { Icon } from "$lib/icons";
+  import { Icons } from "$lib/icons";
+  import Icon from "../Icon.svelte";
   export let url: string;
 
   // 0 - Normal | 1 = Active
@@ -22,6 +23,7 @@
   on:click={() => {
     copyLink();
   }}
+  class="w-6"
 >
-  <div class="w-5 hover:scale-105 duration-300 {status == 0 ? 'fill-ctp-text hover:fill-ctp-sapphire' : 'fill-ctp-green'}"><Icon.Copyclipboard /></div>
+  <Icon icon={Icons.Copyclipboard} className="w-5 hover:scale-105 duration-300 {status == 0 ? 'fill-ctp-text hover:fill-ctp-sapphire' : 'fill-ctp-green'}" />
 </button>

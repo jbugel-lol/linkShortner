@@ -1,13 +1,14 @@
 <script lang="ts">
   import CreateLink from "$lib/components/admin/CreateLink.svelte";
   import CopyLink from "$lib/components/admin/CopyLink.svelte";
-  import { Icon } from "$lib/icons";
+  import { Icons } from "$lib/icons";
   import { getFavicon } from "$lib/utils.js";
   import type { url } from "@prisma/client";
   import { preloadData, pushState, goto } from "$app/navigation";
   import { page } from "$app/stores";
   import Modal from "$lib/components/Modal.svelte";
   import Button from "$lib/components/Button.svelte";
+  import Icon from "$lib/components/Icon.svelte";
 
   export let data;
   let links: url[] = data.data;
@@ -63,30 +64,20 @@
   <title>Admin | {import.meta.env.VITE_WEBSITE_DOMAIN}</title>
 </svelte:head>
 <div class="bg-cat-crust min-h-screen text-cat-text">
-  <nav class="grid grid-rows-3 grid-cols-8 p-8">
+  <nav class="grid lg:grid-rows-3 lg:grid-cols-8 grid-rows-2 grid-cols-2 gap-6 p-8">
     <h1 class="font-bold text-2xl col-span-1 place-content-center">{import.meta.env.VITE_WEBSITE_DOMAIN}</h1>
 
-    <div class="col-span-6 place-content-center flex">
+    <div class="col-span-2 row-start-2 lg:row-start-1 lg:col-start-2 lg:col-span-6 place-content-center flex">
       <CreateLink on:newLink={handlenewLink} />
     </div>
 
     <div class="flex items-center flex-row-reverse gap-6 col-span-1">
-      <a href="/admin/settings" data-sveltekit-preload-data class="btn btn-primary">
-        <div class="w-6 fill-ctp-base"><Icon.Settings /></div>
+      <a href="/admin/settings" data-sveltekit-preload-data class="btn btn-ghost">
+        <Icon icon={Icons.Settings} />
         <p>Settings</p>
       </a>
     </div>
   </nav>
-
-  <!-- {#if !data.country_code_detected}
-    <div role="alert" class="alert alert-warning max-w-xl mx-auto my-8">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="h-6 w-6 shrink-0 stroke-current">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-      </svg>
-      <span>Country Headers are not detected!</span>
-    </div>
-  {/if} -->
-
   <div class="flex flex-col gap-4 xl:w-1/2 w-11/12 mx-auto mb-12">
     {#each links as { location, id, clicks }}
       <div class="bg-ctp-mantle flex lg:flex-row flex-col gap-6 justify-between items-center p-4 lg:p-6 lg:px-8 lg:rounded-xl rounded-2xl group">
@@ -98,16 +89,17 @@
           </div>
         </div>
         <div class="flex gap-2 bg-ctp-crust items-center bg-cat-surface0 text-ctp-text p-1 px-3 rounded-full group/countries relative hover:cursor-pointer">
-          <div class="w-5"><Icon.Eye /></div>
-          {clicks == null ? 0 : clicks}
+          <Icon icon={Icons.Eye} />
+          {clicks}
         </div>
         <div class="flex gap-4 items-center">
           <button
             on:click={() => {
               deleteURL(id);
             }}
+            class="w-6"
           >
-            <div class="w-6 hover:fill-cat-red fill-ctp-red"><Icon.Trash /></div>
+            <Icon icon={Icons.Trash} className="fill-ctp-peach hover:fill-ctp-red" />
           </button>
         </div>
         <CopyLink url={import.meta.env.VITE_DOMAIN + "/" + id} />
@@ -128,8 +120,9 @@
             }
           }}
           data-sveltekit-preload-data
-          class="w-6 fill-slate-300"
-          ><Icon.Send />
+          class="w-6"
+        >
+          <Icon icon={Icons.Send} />
         </a>
       </div>
     {:else}
@@ -146,7 +139,7 @@
     <div slot="header" class="flex justify-between items-center grow pr-8">
       <!-- <p><b>{import.meta.env.VITE_WEBSITE_DOMAIN + "/" + $page.state.link.id}</b></p> -->
       <a class="btn btn-ghost" href={`/admin/link/${$page.state.link.id}`} target="_blank">
-        <div class="w-5 fill-ctp-text"><Icon.NewTab /></div>
+        <Icon icon={Icons.NewTab} />
         <p>Open Page</p></a
       >
     </div>
