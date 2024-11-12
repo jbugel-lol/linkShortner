@@ -9,6 +9,8 @@
   import Modal from "$lib/components/Modal.svelte";
   import Button from "$lib/components/Button.svelte";
   import Icon from "$lib/components/Icon.svelte";
+  import { appConfigCache, getAppConfig, getAppSettingValue } from "$lib/appConfig.js";
+  import { AppSettingKey } from "$lib/types.js";
 
   export let data;
   let links: url[] = data.data;
@@ -58,10 +60,12 @@
       links = [...links, ...responseData.urls];
     }
   }
+
+  console.log(getAppSettingValue(AppSettingKey.NAME));
 </script>
 
 <svelte:head>
-  <title>Admin | {import.meta.env.VITE_WEBSITE_DOMAIN}</title>
+  <title>Admin | {getAppSettingValue(AppSettingKey.NAME)}</title>
 </svelte:head>
 <div class="bg-cat-crust min-h-screen text-cat-text">
   <nav class="grid lg:grid-rows-3 lg:grid-cols-8 grid-rows-2 grid-cols-2 gap-6 p-8">

@@ -1,6 +1,6 @@
 import prisma from "$lib/server/prisma.js";
 import { detectDevice } from "$lib/utils.js";
-import { redirect } from "@sveltejs/kit";
+import { error, redirect } from "@sveltejs/kit";
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load({ params, request }) {
@@ -27,5 +27,5 @@ export async function load({ params, request }) {
     return redirect(302, query.location);
   }
 
-  return redirect(302, import.meta.env.VITE_ERROR_DOMAIN);
+  throw error(404);
 }

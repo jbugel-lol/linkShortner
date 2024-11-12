@@ -16,13 +16,13 @@
 
 {#if !data.countryCodeDetected}
     <div role="alert" class="alert alert-info text-xs lg:text-base w-11/12 mx-auto my-8">
-        <div class="w-6"><Icons.DatabaseOff /></div>
+        <Icon icon={Icons.Badge} className="fill-ctp-mantle" />
         <span>Country Code Headers are not present! You can use a Cloudflare Proxied Connection to detect Country Codes for Free.</span>
     </div>
 {/if}
 
 <MfaModal bind:show2FAModal />
-<div class="container border-2 rounded-xl border-ctp-surface2 flex flex-col mt-2 divide-y divide-ctp-surface2">
+<div class="container border-2 rounded-xl border-ctp-surface2 flex flex-col mt-2 divide-y divide-ctp-surface2 w-11/12 mx-auto">
     <SettingsItem
         name="2 Factor Authentication"
         icon={Icons.Badge}

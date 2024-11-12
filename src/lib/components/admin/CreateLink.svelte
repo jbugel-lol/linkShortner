@@ -47,9 +47,9 @@
     }
 </script>
 
-<form on:submit|preventDefault={onSubmit} class="max-w-5xl w-full flex place-content-center relative group">
-    <input id="url" name="url" placeholder="Enter URL" autocomplete="off" class="input input-primary border-2 bg-ctp-mantle rounded-r-none w-full" type="search" />
-    <button type="submit" class="btn btn-primary rounded-l-none">
+<form on:submit|preventDefault={onSubmit} class="max-w-5xl w-full flex relative group input input-primary">
+    <input id="url" name="url" placeholder="Enter URL" autocomplete="off" class="bg-ctp-mantle rounded-r-none w-full" type="search" />
+    <button type="submit" class="btn btn-primary rounded-l-none absolute right-0">
         <Icon icon={Icons.Send} className="w-6" />
     </button>
     <div class="z-50 absolute top-full left-0 translate-y-3 duration-300 w-full bg-ctp-mantle hidden group-focus-within:inline-block rounded-xl p-6 outline outline-1 outline-primary">

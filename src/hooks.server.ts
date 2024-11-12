@@ -1,3 +1,4 @@
+
 import prisma from "$lib/server/prisma";
 import { redirect, type Handle } from "@sveltejs/kit";
 
@@ -19,10 +20,13 @@ export const handle: Handle = async ({ event, resolve }) => {
                         gt: new Date()
                     }
                 }
+            },
+            include: {
+                account: true
             }
         })
 
-        if (!user) {
+        if (!user || user.account.role !== "ADMIN") {
             event.cookies.delete("session", {
                 path: "/"
             });

@@ -7,10 +7,33 @@ generator client {
     provider = "prisma-client-js"
 }
 
+model account {
+    id       String    @id @default(uuid())
+    username String    @unique
+    password String
+    avatar   String?
+    MFAToken String?
+    created  DateTime  @default(now())
+    updated  DateTime  @default(now()) @updatedAt
+    role     String    @default("USER")
+    session  session[]
+    url      url[]
+}
+
+model appsettings {
+    id      String   @id
+    value   String
+    created DateTime @default(now())
+    updated DateTime @default(now()) @updatedAt
+}
+
 model session {
     id         String   @id
     created    DateTime @default(now())
     validUntil DateTime
+
+    account   account @relation(fields: [accountID], references: [id])
+    accountID String
 }
 
 model url {
@@ -20,6 +43,9 @@ model url {
     updated  DateTime @default(now()) @updatedAt
     location String?
     visit    visit[]
+
+    account   account? @relation(fields: [accountID], references: [id], onDelete: SetNull)
+    accountID String?
 }
 
 model visit {

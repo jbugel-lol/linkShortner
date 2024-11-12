@@ -45,7 +45,7 @@
     <title>Admin | Trash</title>
 </svelte:head>
 
-<div class="flex items-center justify-between mt-8">
+<div class="flex items-center justify-between mt-8 w-11/12 mx-auto">
     <label class="label cursor-pointer gap-2">
         <input
             type="checkbox"
@@ -67,7 +67,7 @@
     >
 </div>
 
-<div class="flex flex-col gap-4 my-8 mb-12">
+<div class="flex flex-col gap-4 my-8 mb-12 w-11/12 mx-auto">
     {#each data.urls as url}
         <div class="bg-ctp-mantle flex lg:flex-row flex-col gap-6 justify-between items-center p-4 lg:p-6 lg:px-8 lg:rounded-xl rounded-2xl group {deletingIDs.includes(url.id) ? 'outline outline-1 outline-ctp-red' : ''}">
             <input
@@ -103,7 +103,6 @@
     {:else}
         <div class="text-center">No URLs found</div>
     {/each}
-
     {#if data.urls.length < data.countedUrls}
         <Button onclick={addPage} className="btn-primary w-max mx-auto">Load more</Button>
     {/if}

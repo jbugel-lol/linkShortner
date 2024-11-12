@@ -1,11 +1,12 @@
 <script lang="ts">
   import { applyAction, enhance } from "$app/forms";
   import { goto } from "$app/navigation";
+  import { getAppSettingValue } from "$lib/appConfig.js";
+  import { AppSettingKey } from "$lib/types.js";
   import { onMount } from "svelte";
   import { slide } from "svelte/transition";
 
   export let data;
-
   let password = "";
   let loading: boolean = false;
   export let form;
@@ -18,7 +19,7 @@
 </script>
 
 <svelte:head>
-  <title>Login | {import.meta.env.VITE_WEBSITE_DOMAIN}</title>
+  <title>Login | {getAppSettingValue(AppSettingKey.NAME)}</title>
 </svelte:head>
 
 <div class="bg-cat-mantle min-h-screen text-cat-subtext1 bg-[url('/wave.svg')] bg-no-repeat bg-bottom">
@@ -67,12 +68,23 @@
         form = null;
       }}
       class="input input-primary input-bordered w-full"
+      placeholder="Username"
+      name="username"
+      type="text"
+    />
+
+    <input
+      on:input={() => {
+        form = null;
+      }}
+      class="input input-primary input-bordered w-full"
       bind:value={password}
       placeholder="Password"
       name="password"
       type="password"
     />
     <input
+      name="MFACODE"
       class="input input-primary input-bordered w-full"
       type="text"
       inputmode="numeric"
@@ -80,7 +92,6 @@
       autocomplete="one-time-code"
       maxlength="6"
       placeholder="2FA-Token"
-      disabled
       on:input={(e) => {
         e.currentTarget.value = e.currentTarget.value.replace(/[^0-9]/g, "");
       }}
