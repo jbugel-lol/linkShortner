@@ -1,13 +1,9 @@
 <script>
-  import { getAppSettingValue, setupAppConfig } from "$lib/appConfig";
-  import { AppSettingKey } from "$lib/types";
+  import { env } from "$env/dynamic/public";
   import "../app.css";
-
-  export let data;
-  setupAppConfig(data.appSettings);
 </script>
 
 <svelte:head>
-  <title>{getAppSettingValue(AppSettingKey.NAME)}</title>
+  <title>{env.PUBLIC_APP_NAME}</title>
 </svelte:head>
 <slot />

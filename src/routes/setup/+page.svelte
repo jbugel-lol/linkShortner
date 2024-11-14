@@ -3,21 +3,21 @@
     import { page } from "$app/stores";
     import Button from "$lib/components/Button.svelte";
 
-    export let data;
-    if (data.exists) goto("/");
-
     let step: number = 0;
+
+    export let data;
+
+    console.log({ ...data });
 
     let name: string = "jbugel.link";
     let domain: string = $page.url.hostname;
     let proxy_header: string = "CF-IPCountry";
+    let database_url: string = "./database.db";
 
     let username: string = "admin";
     let password: string = "admin";
 
     async function setupComplete() {
-        console.log("Running setup");
-
         const res = await fetch("/setup", {
             method: "POST",
             body: JSON.stringify({
@@ -26,29 +26,32 @@
                 proxy_header,
                 username,
                 password,
+                database_url: "file:" + database_url,
             }),
         });
-
         const status = res.status;
         if (status == 200) {
             goto("/admin");
+        } else {
+            alert("Failed to setup");
         }
     }
 </script>
 
 <svelte:head>
-    <title>Setup | {name}</title>
+    <title>Setup your App</title>
 </svelte:head>
-<div class="container h-screen mx-auto">
+<div class="min-h-screen mx-auto">
     <div class="flex gap-3 p-8">
         <img class="w-8" src="/icons/logo.svg" alt="" />
         <h1 class="text-2xl font-bold">{name}</h1>
     </div>
     <ul class="steps">
         <li class="step {step >= 0 ? 'step-primary' : ''}">App Settings</li>
-        <li class="step {step >= 1 ? 'step-primary' : ''}">Create Account</li>
+        <li class="step {step >= 1 ? 'step-primary' : ''}">Database</li>
+        <li class="step {step >= 2 ? 'step-primary' : ''}">Create Account</li>
     </ul>
-    <div class="mx-auto mt-16 w-2/3">
+    <div class="mx-auto mt-16 lg:w-2/3">
         {#if step == 0}
             <div class="flex flex-col gap-5 w-1/2 mx-auto">
                 <h2 class="text-4xl font-bold mb-4">App Settings</h2>
@@ -67,11 +70,24 @@
                     </div>
                     <input bind:value={proxy_header} type="text" placeholder="Type here" class="input input-bordered w-full" />
                     <div class="label">
-                        <span class="label-text-alt">The Header name for Country Detection. Default are the Cloudflare Headers</span>
+                        <span class="label-text-alt">The Header name for Country Detection. Default is the Cloudflare Header</span>
                     </div>
                 </label>
             </div>
         {:else if step == 1}
+            <div class="flex flex-col gap-5 w-1/2 mx-auto">
+                <h2 class="text-4xl font-bold mb-4">App Settings</h2>
+                <label class="form-control w-full">
+                    <div class="label">
+                        <span class="label-text">SQLite Location</span>
+                    </div>
+                    <input bind:value={database_url} type="text" placeholder="Type here" class="input input-bordered w-full" />
+                    <div class="label">
+                        <span class="label-text-alt">Enter the path to the database file. Relative to the schema.prisma file</span>
+                    </div>
+                </label>
+            </div>
+        {:else if step == 2}
             <div class="flex flex-col gap-5 w-1/2 mx-auto">
                 <h2 class="text-4xl font-bold mb-4">Account</h2>
 
@@ -94,7 +110,7 @@
             >
             <Button
                 onclick={() => {
-                    if (step < 1) {
+                    if (step < 2) {
                         step++;
                         return;
                     }

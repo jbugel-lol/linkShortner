@@ -1,8 +1,7 @@
 <script lang="ts">
   import { applyAction, enhance } from "$app/forms";
   import { goto } from "$app/navigation";
-  import { getAppSettingValue } from "$lib/appConfig.js";
-  import { AppSettingKey } from "$lib/types.js";
+  import { PUBLIC_APP_NAME } from "$env/static/public";
   import { onMount } from "svelte";
   import { slide } from "svelte/transition";
 
@@ -19,7 +18,7 @@
 </script>
 
 <svelte:head>
-  <title>Login | {getAppSettingValue(AppSettingKey.NAME)}</title>
+  <title>Login | {PUBLIC_APP_NAME}</title>
 </svelte:head>
 
 <div class="bg-cat-mantle min-h-screen text-cat-subtext1 bg-[url('/wave.svg')] bg-no-repeat bg-bottom">

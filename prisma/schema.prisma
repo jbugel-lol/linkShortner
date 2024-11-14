@@ -1,6 +1,6 @@
 datasource db {
     provider = "sqlite"
-    url      = "file:./database.db"
+    url      = env("DATABASE_URL")
 }
 
 generator client {
@@ -18,13 +18,6 @@ model account {
     role     String    @default("USER")
     session  session[]
     url      url[]
-}
-
-model appsettings {
-    id      String   @id
-    value   String
-    created DateTime @default(now())
-    updated DateTime @default(now()) @updatedAt
 }
 
 model session {

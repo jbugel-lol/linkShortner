@@ -1,4 +1,4 @@
-import prisma from "$lib/server/prisma.js";
+import { prisma } from "$lib/server/prisma.js";
 import { error, json } from "@sveltejs/kit";
 
 /** @type {import('./$types').RequestHandler} */

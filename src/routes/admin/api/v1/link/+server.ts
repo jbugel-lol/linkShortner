@@ -1,4 +1,4 @@
-import prisma from "$lib/server/prisma";
+import { prisma } from "$lib/server/prisma";
 import { generateRandomId } from "$lib/utils";
 import { error, json, type Actions } from "@sveltejs/kit";
 

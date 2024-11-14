@@ -1,5 +1,17 @@
-import { PrismaClient } from '@prisma/client'
+import { PrismaClient } from "@prisma/client";
+import { execSync } from 'child_process';
 
-const prisma = new PrismaClient()
+export let prisma: PrismaClient;
+try {
+    prisma = new PrismaClient();
+} catch (error) {
+    //@ts-expect-error
+    throw new Error(error);
+    console.log(error);
+}
 
-export default prisma;
+export async function createSQLLiteDB() {
+    execSync(`npx prisma migrate dev --name init`);
+    prisma = new PrismaClient();
+    return true;
+}

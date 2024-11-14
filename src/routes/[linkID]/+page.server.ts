@@ -1,4 +1,4 @@
-import prisma from "$lib/server/prisma.js";
+import { prisma } from "$lib/server/prisma.js";
 import { detectDevice } from "$lib/utils.js";
 import { error, redirect } from "@sveltejs/kit";
 
