@@ -1,69 +1,82 @@
-# Link Shortener (Work in Progress, also applies to this README)
+# Link Shortener (WIP)
 
-## Overview
+## A sleek, secure, and privacy-focused link shortener built with SvelteKit.
 
-Welcome to our Link Shortener project built using SvelteKit! Our link shortener offers minimal tracking, keeping your data private. We've designed it with a sleek and stylish interface inspired by the [Catppuccin Mocha theme](https://github.com/catppuccin/catppuccin#-palette). As part of our commitment to openness, this project is Free and Open Source Software (FOSS). We've also implemented a secure login page with password authentication for added protection.
+### Overview
 
----
-# Stats
+Welcome to the Link Shortener Project, a minimal and elegant solution for managing your URLs. Designed with privacy in mind, it features:
 
-![GitHub last commit](https://img.shields.io/github/last-commit/jbugel-lol/linkShortner?display_timestamp=committer&logo=github)
-![GitHub repo size](https://img.shields.io/github/repo-size/jbugel-lol/linkShortner)
+•	A secure login system with password authentication.
 
----
+•	A modern, stylish interface inspired by the Catppuccin Mocha theme.
+
+•	Minimal tracking for a privacy-first experience.
+
+•	Free and Open Source Software (FOSS) under the MIT License.
 
 ## Getting Started
 
-To get started with our link shortener, follow these simple steps:
+### Prerequisites
 
-1. **Clone the Repository:**
+Ensure you have the following installed:
 
-   ```bash
-   git clone https://github.com/jbugel-lol/linkShortner.git
-   ```
+•	Node.js (version 16+ recommended)
 
-2. **Navigate to the Project Directory:**
+•	npm
 
-   ```bash
-   cd linkShortner
-   ```
+### Setup
+1.	Clone the Repository
 
-3. **Install Dependencies:**
+```bash
+git clone https://github.com/jbugel-lol/linkShortner.git
+cd linkShortner
+```
 
-   ```bash
-   npm install
-   ```
+2. Install Dependencies
 
-4. **Build the Project:**
+```bash
+npm install
+```
 
-   ```bash
-   npm run build
-   ```
+3.	Configure Environment Variables: Copy the provided .env.example file:
 
-5. **Run the Project:**
+```bash
+cp .env.example .env
+```
 
-   ```bash
-   node build
-   ```
+Fill in the necessary values, such as database credentials.
 
-   _Note: Make sure to configure your Nginx or Apache2 server to listen to the port specified in the console output, typically 3000._
+4.	Run the Project in Development Mode
 
-## Additional Configuration
+```bash
+npm run dev
+npx prisma init
+```
 
-To use our link shortener effectively, there are a couple of additional steps to take:
+This starts the development server at http://localhost:5173 and initializes the database.
 
-- **Database Setup:**
-  You'll need to set up your own database and configure it according to your needs.
+## Features
+•	Minimal Tracking: Ensuring your data stays private.
 
-- **Environment Variables:**
-  Fill out the provided `.env.example` file and rename it to `.env` with your specific configuration. Make sure to prefix all environment variables with `VITE_`, as Vite requires this prefix for proper export.
+•	Customizable: Tailored for your needs with database and environment configurations.
 
-## How to Use
+•	Stylish Design: Inspired by the Catppuccin Mocha theme.
 
-To make use of our link shortener, simply visit `localhost:4173` or the domain you've configured. Our user-friendly interface makes it easy to create and manage your shortened links hassle-free.
+## Development Notes
+•	Database Setup:
+    - Use the schema provided in /prisma/schema.prisma to initialize your database. Compatible with SQLite and Prisma ORM.
 
-## Contributions
+•	Favicons Fetching:
+    - Favicon updates are asynchronous. A delay may occur in displaying updated icons for newly added links.
 
-While we currently don't have specific guidelines for contributions, we welcome your involvement! Feel free to fork the project and submit pull requests for any improvements or fixes you'd like to contribute. Together, we can make this link shortener even better.
+## Contribution
 
-### Thanks for the help, InspectorRex ❤️
+We welcome contributions! Whether it’s fixing bugs, suggesting features, or refining existing functionality, we’d love your help.
+1.	Fork the repo and clone your copy.
+2.	Create a feature branch.
+3.	Commit your changes with meaningful messages.
+4.	Push your branch and open a pull request.
+
+## Acknowledgments
+
+Special thanks to InspectorRex for the ongoing help. ❤️
