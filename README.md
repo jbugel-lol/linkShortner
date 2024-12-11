@@ -64,10 +64,12 @@ This starts the development server at http://localhost:5173 and initializes the 
 
 ## Development Notes
 •	Database Setup:
-    - Use the schema provided in /prisma/schema.prisma to initialize your database. Compatible with SQLite and Prisma ORM.
+
+Use the schema provided in /prisma/schema.prisma to initialize your database. Compatible with SQLite and Prisma ORM.
 
 •	Favicons Fetching:
-    - Favicon updates are asynchronous. A delay may occur in displaying updated icons for newly added links.
+
+Favicon updates are asynchronous. A delay may occur in displaying updated icons for newly added links.
 
 ## Contribution
 
