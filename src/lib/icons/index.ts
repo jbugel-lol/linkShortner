@@ -6,6 +6,8 @@ import NewTab from "./new_tab.svelte";
 import Send from "./send.svelte";
 import Settings from "./settings.svelte";
 import Trash from "./trash.svelte";
+import EyeSlash from "./eyeslash.svelte"
+import LogOut from "./logout.svelte";
 
 export const Icons = {
     Badge: Badge,
@@ -15,5 +17,7 @@ export const Icons = {
     Copyclipboard: Copyclipboard,
     Eye: Eye,
     Trash: Trash,
-    NewTab: NewTab
+    NewTab: NewTab,
+    EyeSlash: EyeSlash,
+    LogOut: LogOut
 }

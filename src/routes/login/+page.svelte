@@ -4,9 +4,11 @@
   import { PUBLIC_APP_NAME } from "$env/static/public";
   import { onMount } from "svelte";
   import { slide } from "svelte/transition";
-
+  import {Icons} from "$lib/icons";
+  import Icon from "$lib/components/Icon.svelte"
   export let data;
   let password = "";
+  let showPassword: boolean = false;
   let loading: boolean = false;
   export let form;
 
@@ -21,7 +23,7 @@
   <title>Login | {PUBLIC_APP_NAME}</title>
 </svelte:head>
 
-<div class="bg-cat-mantle min-h-screen text-cat-subtext1 bg-[url('/wave.svg')] bg-no-repeat bg-bottom">
+<div class="bg-cat-mantle min-h-screen text-cat-subtext1 bg-no-repeat bg-bottom">
   <form
     use:enhance={({ formElement, formData, action, cancel }) => {
       return async ({ result, action, update }) => {
@@ -29,6 +31,7 @@
 
         if (result.type === "redirect") {
           goto(result.location);
+          return;
         }
 
         if (result.type === "failure") {
@@ -53,7 +56,7 @@
       </div>
     {/if}
 
-    {#if form?.success == false}
+    {#if form?.success === false}
       <div role="alert" class="alert alert-error">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -63,42 +66,57 @@
     {/if}
 
     <input
-      on:input={() => {
-        form = null;
-      }}
-      class="input input-primary input-bordered w-full"
-      placeholder="Username"
-      name="username"
-      type="text"
+            id="username"
+            name="username"
+            class="input input-primary input-bordered w-full"
+            placeholder="Username"
+            type="text"
+            autocomplete="username"
     />
 
+    <!-- Password Field -->
+    <div class="relative flex items-center w-full">
+      <input
+              id="password"
+              name="password"
+              class="input input-primary input-bordered w-full pr-12"
+              placeholder="Password"
+              type={showPassword ? "text" : "password"}
+              autocomplete="current-password"
+      />
+      <button
+              type="button"
+              class="absolute right-2 btn btn-sm"
+              on:click={() => (showPassword = !showPassword)}
+              aria-label={showPassword ? "Hide password" : "Show password"}
+      >
+        {#if showPassword}
+          <Icon icon={Icons.EyeSlash} />
+        {:else}
+          <Icon icon={Icons.Eye} />
+        {/if}
+      </button>
+    </div>
+
+    <!-- 2FA Code Field -->
     <input
-      on:input={() => {
-        form = null;
-      }}
-      class="input input-primary input-bordered w-full"
-      bind:value={password}
-      placeholder="Password"
-      name="password"
-      type="password"
+            id="2fa-code"
+            name="MFACODE"
+            class="input input-primary input-bordered w-full"
+            type="text"
+            inputmode="numeric"
+            pattern="[0-9]*"
+            autocomplete="off"
+            maxlength="6"
+            placeholder="2FA Code"
+            on:input={(e) => {
+      e.currentTarget.value = e.currentTarget.value.replace(/[^0-9]/g, "");
+    }}
     />
-    <input
-      name="MFACODE"
-      class="input input-primary input-bordered w-full"
-      type="text"
-      inputmode="numeric"
-      pattern="[0-9]*"
-      autocomplete="one-time-code"
-      maxlength="6"
-      placeholder="2FA-Token"
-      on:input={(e) => {
-        e.currentTarget.value = e.currentTarget.value.replace(/[^0-9]/g, "");
-      }}
-    />
-    <button type="submit" disabled={password.length < 6} class="btn btn-primary" id="button">
-      {#if loading}
-        <span class="loading loading-spinner loading-xs"></span>
-      {:else}Login{/if}</button
-    >
+
+    <!-- Submit Button -->
+    <button type="submit" class="btn btn-primary" id="submit-button">
+      Login
+    </button>
   </form>
 </div>

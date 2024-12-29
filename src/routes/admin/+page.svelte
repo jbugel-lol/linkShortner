@@ -77,6 +77,16 @@
         <Icon icon={Icons.Settings} />
         <p>Settings</p>
       </a>
+      <a href="/login"
+         class="btn btn-ghost"
+         on:click={async (e) => {
+    e.preventDefault();
+    await fetch("/admin/api/v1/auth/logout", { method: "POST" });
+    window.location.href = "/login";
+         }}>
+        <Icon icon={Icons.LogOut} />
+        <p>Logout</p>
+      </a>
     </div>
   </nav>
   <div class="flex flex-col gap-4 xl:w-1/2 w-11/12 mx-auto mb-12">

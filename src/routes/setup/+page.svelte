@@ -2,6 +2,8 @@
     import { goto } from "$app/navigation";
     import { page } from "$app/stores";
     import Button from "$lib/components/Button.svelte";
+    import Icon from "$lib/components/Icon.svelte";
+    import { Icons } from "$lib/icons";
 
     let step: number = 0;
 
@@ -15,7 +17,8 @@
     let database_url: string = "./database.db";
 
     let username: string = "admin";
-    let password: string = "admin";
+    let password: string = "";
+    let showPassword: boolean = false;
 
     async function setupComplete() {
         const res = await fetch("/setup", {
@@ -91,13 +94,34 @@
             <div class="flex flex-col gap-5 w-1/2 mx-auto">
                 <h2 class="text-4xl font-bold mb-4">Account</h2>
 
+                <div role="alert" class="alert alert-info">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="h-6 w-6 shrink-0 stroke-current">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <span>
+                        Once the account is created, the server will automatically restart and redirect you to the admin panel. During the restart, you may encounter a 500 Internal Server Error; this is expected and will resolve automatically.                    </span>
+                </div>
+
                 <label class="input input-bordered flex items-center gap-2">
+                    <img src="/icons/user.svg" alt="User Icon" class="w-6" />
                     Username
                     <input bind:value={username} type="text" class="grow" placeholder="admin" />
                 </label>
                 <label class="input input-bordered flex items-center gap-2">
-                    Password
-                    <input bind:value={password} type="text" class="grow" placeholder="password" />
+                    <img src="/icons/password.svg" alt="Password Icon" class="w-6" />
+                    <span>Password</span>
+                    {#if showPassword}
+                        <input bind:value={password} type="text" class="grow" placeholder="Enter a secure password"/>
+                    {:else}
+                        <input bind:value={password} type="password" class="grow" placeholder="Enter a secure password"/>
+                    {/if}
+                    <button type="button" class="btn btn-sm" on:click={() => showPassword = !showPassword} aria-label={showPassword ? "Hide password" : "Show password"}>
+                        {#if showPassword}
+                            <Icon icon={Icons.EyeSlash} />
+                        {:else}
+                            <Icon icon={Icons.Eye} />
+                        {/if}
+                    </button>
                 </label>
             </div>
         {/if}
@@ -116,7 +140,8 @@
                     }
                     setupComplete();
                 }}
-                className="btn-primary px-12">Continue</Button
+                className="btn-primary px-12">
+                {step < 2 ? "Continue" : "Finish Setup"}</Button
             >
         </div>
     </div>
